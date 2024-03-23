@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_root">RootActivity</string>
+    <string name="catalog">Каталог</string>
+    <string name="calendar">Календарь</string>
+    <string name="notification">Уведомления</string>
+    <string name="works">Работы</string>
+</resources>

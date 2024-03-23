@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "386790377148",
+    "firebase_url": "https://kasip-kz-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kasip-kz",
+    "storage_bucket": "kasip-kz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386790377148:android:a1fd5108062ed9faecf2b9",
+        "android_client_info": {
+          "package_name": "kz.kasip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUCAQDYekUg4VnNeq_WxRjmgt5sAQnwvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
