@@ -3,7 +3,7 @@ package kz.kasip.data.repository
 import android.content.SharedPreferences
 
 
-class DataStoreRepository (private val sharedPreferences: SharedPreferences) {
+class DataStoreRepository(private val sharedPreferences: SharedPreferences) {
     companion object {
         private const val userId = "userId"
     }
@@ -14,5 +14,9 @@ class DataStoreRepository (private val sharedPreferences: SharedPreferences) {
 
     fun saveUserId(userId: String) {
         sharedPreferences.edit().putString(Companion.userId, userId).apply()
+    }
+
+    fun clear() {
+        return sharedPreferences.edit().clear().apply()
     }
 }
