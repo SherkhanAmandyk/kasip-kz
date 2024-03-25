@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 
@@ -71,6 +72,7 @@ fun MainTopAppBar() {
         }
         Column(modifier = Modifier
             .fillMaxWidth()
+            .padding()
             .background(
                 color = Color.LightGray,
                 shape = RoundedCornerShape(45.dp)
@@ -86,7 +88,11 @@ fun MainTopAppBar() {
                     .padding(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Balance:")
+                Text(
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically),
+                    fontSize = 22.sp,
+                    text = "Balance:"
+                )
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Top up")
                 }
@@ -97,11 +103,15 @@ fun MainTopAppBar() {
                     .padding(horizontal = 24.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Transaction history")
+                Text(
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically),
+                    text = "Transaction history"
+                )
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Withdraw")
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
         Row(
             modifier = Modifier
