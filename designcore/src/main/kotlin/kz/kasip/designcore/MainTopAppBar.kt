@@ -1,4 +1,4 @@
-package kz.kasip.deigncore
+package kz.kasip.designcore
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
+import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 
 @Composable
 fun MainTopAppBar() {
@@ -38,12 +39,12 @@ fun MainTopAppBar() {
     val payment = ConstrainedLayoutReference("payment")
     val status = ConstrainedLayoutReference("status")
     ConstraintLayout(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Box(modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = Color.Green,
+                color = PrimaryBackgroundGreen,
                 shape = RoundedCornerShape(
                     bottomStart = 45.dp,
                     bottomEnd = 45.dp

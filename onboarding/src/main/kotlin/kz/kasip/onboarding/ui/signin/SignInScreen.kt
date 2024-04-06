@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kz.kasip.deigncore.EmailTextField
-import kz.kasip.deigncore.PasswordTextField
+import kz.kasip.designcore.EmailTextField
+import kz.kasip.designcore.PasswordTextField
 import kz.kasip.onboarding.R
 
 @Composable

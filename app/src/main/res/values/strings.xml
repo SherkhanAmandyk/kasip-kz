@@ -5,4 +5,5 @@
     <string name="calendar">Календарь</string>
     <string name="notification">Уведомления</string>
     <string name="works">Работы</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -8,4 +8,8 @@
     <string name="show_password">Show password</string>
     <string name="repeat_password">Repeat password</string>
     <string name="email">Email</string>
+    <string name="email_is_used">Email is already used</string>
+    <string name="ok">OK</string>
+    <string name="password_doesnt_match">Passwords doesn\'t match</string>
+    <string name="email_invalid">Email is invalid</string>
 </resources>

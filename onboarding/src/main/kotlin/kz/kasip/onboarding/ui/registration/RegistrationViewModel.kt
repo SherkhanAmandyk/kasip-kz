@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kz.kasip.onboarding.usecase.RegistrationUseCase
 import kz.kasip.onboarding.usecase.RegistrationUseCase.RegistrationResult.EmailAlreadyExists
+import kz.kasip.onboarding.usecase.RegistrationUseCase.RegistrationResult.EmailInvalid
 import kz.kasip.onboarding.usecase.RegistrationUseCase.RegistrationResult.Error
 import kz.kasip.onboarding.usecase.RegistrationUseCase.RegistrationResult.FieldsAreEmpty
 import kz.kasip.onboarding.usecase.RegistrationUseCase.RegistrationResult.PasswordNotSame
@@ -22,6 +23,7 @@ class RegistrationViewModel @Inject constructor(
 
     val isRegistrationInProgress = MutableStateFlow(false)
     val isEmailAlreadyExistsFlow = MutableStateFlow(false)
+    val isEmailInvalidFlow = MutableStateFlow(false)
     val isPasswordNotSameFlow = MutableStateFlow(false)
     val isErrorFlow = MutableStateFlow(false)
     val isFieldsEmptyFlow = MutableStateFlow(false)
@@ -41,6 +43,7 @@ class RegistrationViewModel @Inject constructor(
                 FieldsAreEmpty -> isFieldsEmptyFlow.update { true }
                 PasswordNotSame -> isPasswordNotSameFlow.update { true }
                 is RegisteredUser -> isRegisteredFlow.update { true }
+                EmailInvalid -> isEmailInvalidFlow.update { true }
             }
             isRegistrationInProgress.update { false }
         }
@@ -48,6 +51,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun invalidateStates() {
         isEmailAlreadyExistsFlow.update { false }
+        isEmailInvalidFlow.update { false }
         isPasswordNotSameFlow.update { false }
         isErrorFlow.update { false }
         isFieldsEmptyFlow.update { false }

@@ -1,4 +1,4 @@
-package kz.kasip.ui
+package kz.kasip.ui.main
 
 class MainUiState {
     val sections = listOf<Pair<String, List<String>>>(

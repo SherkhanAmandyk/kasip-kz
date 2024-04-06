@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "kz.kasip.deigncore"
+    namespace = "kz.kasip.designcore"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rialto">Rialto</string>
+    <string name="salesperson">I am a salesperson</string>
+    <string name="buyer">I am a buyer</string>
+    <string name="offer">Offer a service</string>
+    <string name="rate">Rate %s</string>
+    <string name="history">History</string>
+    <string name="offer_a_service">Offer a service</string>
+    <string name="description_of_project">Detail description of project</string>
+</resources>

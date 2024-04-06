@@ -1,4 +1,4 @@
-package kz.kasip.ui.theme
+package kz.kasip.designcore.theme
 
 import android.app.Activity
 import android.os.Build

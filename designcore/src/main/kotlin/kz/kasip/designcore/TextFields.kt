@@ -1,4 +1,4 @@
-package kz.kasip.deigncore
+package kz.kasip.designcore
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions

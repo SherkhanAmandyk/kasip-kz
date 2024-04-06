@@ -1,4 +1,4 @@
-package kz.kasip.ui.theme
+package kz.kasip.designcore.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

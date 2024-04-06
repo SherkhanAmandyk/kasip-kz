@@ -29,8 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.data.repository.UserRepository
-import kz.kasip.deigncore.EmailTextField
-import kz.kasip.deigncore.PasswordTextField
+import kz.kasip.designcore.ButtonUiState
+import kz.kasip.designcore.EmailTextField
+import kz.kasip.designcore.KasipDialog
+import kz.kasip.designcore.PasswordTextField
 import kz.kasip.onboarding.R
 import kz.kasip.onboarding.usecase.RegistrationUseCase
 
@@ -39,6 +41,38 @@ fun RegistrationScreen(
     viewModel: RegistrationViewModel = hiltViewModel(),
     navigateToMain: () -> Unit,
 ) {
+    if (viewModel.isEmailAlreadyExistsFlow.collectAsState().value) {
+        KasipDialog(
+            title = stringResource(id = R.string.email_is_used),
+            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            onDismissRequest = { viewModel.invalidateStates() }) {
+            viewModel.invalidateStates()
+        }
+    }
+    if (viewModel.isPasswordNotSameFlow.collectAsState().value) {
+        KasipDialog(
+            title = stringResource(id = R.string.password_doesnt_match),
+            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            onDismissRequest = { viewModel.invalidateStates() }) {
+            viewModel.invalidateStates()
+        }
+    }
+    if (viewModel.isEmailAlreadyExistsFlow.collectAsState().value) {
+        KasipDialog(
+            title = stringResource(id = R.string.email_is_used),
+            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            onDismissRequest = { viewModel.invalidateStates() }) {
+            viewModel.invalidateStates()
+        }
+    }
+    if (viewModel.isEmailInvalidFlow.collectAsState().value) {
+        KasipDialog(
+            title = stringResource(id = R.string.email_invalid),
+            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            onDismissRequest = { viewModel.invalidateStates() }) {
+            viewModel.invalidateStates()
+        }
+    }
     Surface {
         Scaffold {
             val isRegistered by viewModel.isRegisteredFlow.collectAsState()

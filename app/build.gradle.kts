@@ -56,7 +56,9 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":onboarding"))
+    implementation(project(":settings"))
     implementation(project(":designcore"))
+    implementation(project(":rialto"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -78,6 +80,10 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestorm)
+    implementation(libs.firebase.storage)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

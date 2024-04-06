@@ -1,4 +1,4 @@
-package kz.kasip.ui
+package kz.kasip.ui.main
 
 import android.content.Context.MODE_PRIVATE
 import androidx.compose.foundation.background
@@ -31,24 +31,31 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.R
 import kz.kasip.data.repository.DataStoreRepository
-import kz.kasip.deigncore.MainTopAppBar
+import kz.kasip.designcore.MainTopAppBar
+import kz.kasip.onboarding.navigation.onboarding
+import kz.kasip.rialto.navigation.mainRialtoScreen
 import kz.kasip.usecase.LogOutUseCase
 
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = hiltViewModel(),
-    navigateToOnboarding: () -> Unit,
+    navigateTo: (String) -> Unit,
 ) {
     val isLoggedOut by viewModel.isLoggedOut.collectAsState()
     if (isLoggedOut) {
-        navigateToOnboarding()
+        navigateTo(onboarding)
     }
     val uiState = MainUiState()
+
+    val onItemClick: (String) -> Unit = {
+        when (it) {
+            "Rialto" -> navigateTo(mainRialtoScreen)
+        }
+    }
+    val scrollState = rememberScrollState()
+
     Surface {
         Scaffold(
-            topBar = {
-                MainTopAppBar()
-            },
             bottomBar = {
                 BottomAppBar(
                     actions = {
@@ -86,13 +93,16 @@ fun MainScreen(
                 )
             }
         ) {
-            val scrollState = rememberScrollState()
-            Box(modifier = Modifier.padding(it)) {
+            Box(modifier = Modifier.padding(it).fillMaxWidth()) {
                 Column(
-                    modifier = Modifier.verticalScroll(scrollState)
+                    modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()
                 ) {
+                    MainTopAppBar()
                     uiState.sections.forEach {
-                        Section(it)
+                        Section(
+                            it,
+                            onItemClick
+                        )
                     }
                     TextButton(onClick = {
                         viewModel.logOut()
@@ -106,8 +116,11 @@ fun MainScreen(
 }
 
 @Composable
-fun Section(section: Pair<String, List<String>>) {
-    Column {
+fun Section(
+    section: Pair<String, List<String>>,
+    onItemClick: (String) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         val textPadding = PaddingValues(top = 24.dp, start = 40.dp, bottom = 12.dp)
         Text(
             modifier = Modifier.padding(textPadding),
@@ -121,13 +134,17 @@ fun Section(section: Pair<String, List<String>>) {
                 .height(1.dp)
                 .background(color = Color.Black)
         )
-        Column {
+        Column(modifier = Modifier.fillMaxWidth()) {
             section.second.forEach {
-                Text(
-                    modifier = Modifier.padding(textPadding),
-                    text = it,
-                    fontSize = 21.sp
-                )
+                Surface(
+                    onClick = { onItemClick(it) }
+                ) {
+                    Text(
+                        modifier = Modifier.padding(textPadding).fillMaxWidth(),
+                        text = it,
+                        fontSize = 21.sp
+                    )
+                }
             }
         }
     }
