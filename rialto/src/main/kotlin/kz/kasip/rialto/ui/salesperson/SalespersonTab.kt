@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -34,15 +36,18 @@ import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.Divider
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.rialto.R
+import kz.kasip.rialto.RialtoUi
 
 @Composable
 fun SalespersonTab(
     viewModel: SalespersonViewModel = hiltViewModel(),
-    navigateToOfferService: () -> Unit,
+    navigateToOfferService: (RialtoUi) -> Unit,
 ) {
     val searchText by viewModel.searchTextFlow.collectAsState()
 
+    val scrollState = rememberScrollState()
     Column(
+        modifier = Modifier.verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Spacer(modifier = Modifier.height(30.dp))
@@ -57,7 +62,7 @@ fun SalespersonTab(
             }
         )
 
-        val rialtos by viewModel.rialtosFlow.collectAsState()
+        val rialtos by viewModel.rialtosFlow.collectAsState(emptyList())
         rialtos.forEach { rialto ->
             Card(
                 modifier = Modifier
@@ -126,7 +131,7 @@ fun SalespersonTab(
                     }
                     Button(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { navigateToOfferService() },
+                        onClick = { navigateToOfferService(rialto) },
                         colors = ButtonDefaults.buttonColors()
                             .copy(containerColor = PrimaryBackgroundGreen)
                     ) {
@@ -137,10 +142,4 @@ fun SalespersonTab(
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
-}
-
-@Preview
-@Composable
-fun PreviewSalespersonTab() {
-    SalespersonTab {}
 }

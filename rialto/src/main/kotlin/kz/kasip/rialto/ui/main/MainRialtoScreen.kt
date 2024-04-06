@@ -33,12 +33,16 @@ import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.rialto.R
 import kz.kasip.rialto.ui.main.salesperson.BuyerTab
+import kz.kasip.rialto.ui.main.salesperson.BuyerViewModel
 import kz.kasip.rialto.ui.salesperson.SalespersonTab
+import kz.kasip.rialto.ui.salesperson.SalespersonViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainRialtoScreen(
     viewModel: MainRialtoViewModel = hiltViewModel(),
+    salespersonViewModel: SalespersonViewModel = hiltViewModel(),
+    buyerViewModel: BuyerViewModel = hiltViewModel(),
     navigateToFilter: () -> Unit,
     navigateToOfferService: () -> Unit,
     navigateToCreateProject: () -> Unit,
@@ -93,11 +97,19 @@ fun MainRialtoScreen(
                     ) {
                         when (it) {
                             0 -> {
-                                SalespersonTab(navigateToOfferService = navigateToOfferService)
+                                SalespersonTab(
+                                    viewModel = salespersonViewModel,
+                                    navigateToOfferService = {
+                                        salespersonViewModel.selectedRialtoUi = it
+                                        navigateToOfferService()
+                                    }
+                                )
                             }
 
                             1 -> {
-                                BuyerTab(navigateToCreateProject = navigateToCreateProject)
+                                BuyerTab(
+                                    navigateToCreateProject = navigateToCreateProject
+                                )
                             }
                         }
                     }

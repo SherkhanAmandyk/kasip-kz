@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kz.kasip.data.entities.Rialto
+import kz.kasip.data.entities.Rubric
+import kz.kasip.data.entities.Subrubric
+import kz.kasip.data.mappers.toRubric
 import kz.kasip.data.repository.DataStoreRepository
 import java.util.Date
 import javax.inject.Inject
@@ -24,9 +27,24 @@ class CreateProjectViewModel @Inject constructor(
     val validationFlow = MutableStateFlow<Validation>(Validation.OK)
     val projectNameFlow = MutableStateFlow(TextFieldValue(""))
     val projectDescriptionFlow = MutableStateFlow(TextFieldValue(""))
-    val rubricFlow = MutableStateFlow(TextFieldValue(""))
     val priceFlow = MutableStateFlow(TextFieldValue(""))
     val isCreatedFlow = MutableStateFlow(false)
+
+    val selectSubrubricFlow = MutableStateFlow(false)
+    val rubricsFlow = MutableStateFlow(emptyList<Rubric>())
+    val selectedSubrubricFlow = MutableStateFlow<Subrubric?>(null)
+
+    init {
+        Firebase.firestore.collection("rubrics")
+            .addSnapshotListener { value, error ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    val rubrics = value?.documents?.map {
+                        it.toRubric()
+                    }
+                    rubricsFlow.update { rubrics ?: emptyList() }
+                }
+            }
+    }
 
     fun onProjectNameChange(newValue: TextFieldValue) {
         projectNameFlow.update { newValue }
@@ -53,6 +71,10 @@ class CreateProjectViewModel @Inject constructor(
             validationFlow.update { Validation.NoPrice }
             return
         }
+        if (selectedSubrubricFlow.value == null) {
+            validationFlow.update { Validation.NoPrice }
+            return
+        }
         viewModelScope.launch(Dispatchers.IO) {
             Firebase.firestore.collection("rialto").add(
                 Rialto(
@@ -73,8 +95,14 @@ class CreateProjectViewModel @Inject constructor(
         }
     }
 
+    fun onSubrubricSelected(subrubric: Subrubric) {
+        selectedSubrubricFlow.update { subrubric }
+    }
+
     fun invalidateStates() {
+        selectSubrubricFlow.update { false }
         validationFlow.update { Validation.OK }
+        isCreatedFlow.update { false }
     }
 }
 

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kz.kasip.data.entities.Rubric
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.mappers.toRubric
 import kz.kasip.data.repository.DataStoreRepository

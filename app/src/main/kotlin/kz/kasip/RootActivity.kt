@@ -42,7 +42,11 @@ class RootActivity : ComponentActivity() {
                         )
                         onboardingGraph(
                             navigateTo = { navController.navigate(it) },
-                            navigateToMain = { navController.navigate(main) }
+                            navigateToMain = {
+                                navController.popBackStack()
+                                navController.popBackStack()
+                                navController.navigate(main)
+                            }
                         )
                         rialtoNavGraph(
                             navigateTo = { navController.navigate(it) },

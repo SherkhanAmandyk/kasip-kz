@@ -9,16 +9,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,13 +35,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.RubricsList
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
+import kz.kasip.designcore.theme.PurpleGrey40
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateProjectScreen(
     viewModel: CreateProjectViewModel = hiltViewModel(),
@@ -60,6 +70,30 @@ fun CreateProjectScreen(
     Surface(
         color = DialogBackground
     ) {
+        val rubrics by viewModel.rubricsFlow.collectAsState()
+        val selectedSubrubric by viewModel.selectedSubrubricFlow.collectAsState()
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        val selectSubrubric by viewModel.selectSubrubricFlow.collectAsState()
+
+        if (selectSubrubric) {
+            ModalBottomSheet(
+                modifier = Modifier.padding(top = 32.dp),
+                onDismissRequest = {
+                    viewModel.invalidateStates()
+                },
+                sheetState = sheetState
+            ) {
+                RubricsList(
+                    rubrics = rubrics,
+                    selectedSubrubricIds = selectedSubrubric?.let { listOf(it.id ?: "") }
+                        ?: emptyList(),
+                    onSubrubricToggle = {
+                        viewModel.onSubrubricSelected(it)
+                        viewModel.invalidateStates()
+                    }
+                )
+            }
+        }
         Scaffold(
             topBar = {
                 KasipTopAppBar(
@@ -137,21 +171,17 @@ fun CreateProjectScreen(
                             fontSize = 16.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            colors = CardDefaults.elevatedCardColors().copy(
-                                containerColor = Color.White
-                            )
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = TextFieldDefaults.colors().unfocusedContainerColor,
+                            shape = TextFieldDefaults.shape,
+                            onClick = {
+                                viewModel.selectSubrubricFlow.update { true }
+                            }
                         ) {
-                            val offerText by viewModel.rubricFlow.collectAsState()
-                            TextField(
-                                modifier = Modifier.fillMaxWidth(),
-                                value = offerText,
-                                onValueChange = { },
-                                label = {
-                                    Text(text = "Write rubric")
-                                }
+                            Text(
+                                modifier = Modifier.padding(8.dp),
+                                text = selectedSubrubric?.let { it.name } ?: "Write rubric"
                             )
                         }
                     }
@@ -197,6 +227,7 @@ fun CreateProjectScreen(
     val isCreated by viewModel.isCreatedFlow.collectAsState()
     if (isCreated) {
         onBack()
+        viewModel.invalidateStates()
     }
 }
 

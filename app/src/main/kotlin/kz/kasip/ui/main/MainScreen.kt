@@ -34,6 +34,7 @@ import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.MainTopAppBar
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.rialto.navigation.mainRialtoScreen
+import kz.kasip.rialto.navigation.rialtoScreen
 import kz.kasip.usecase.LogOutUseCase
 
 @Composable
@@ -49,7 +50,7 @@ fun MainScreen(
 
     val onItemClick: (String) -> Unit = {
         when (it) {
-            "Rialto" -> navigateTo(mainRialtoScreen)
+            "Rialto" -> navigateTo(rialtoScreen)
         }
     }
     val scrollState = rememberScrollState()

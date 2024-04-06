@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -23,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,13 +41,22 @@ import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.rialto.R
+import kz.kasip.rialto.RialtoUi
 
 @Composable
 fun OfferAServiceScreen(
-    viewModel: OfferAServiceViewModel = hiltViewModel(),
+    rialtoUi: RialtoUi,
+    viewModel: OfferAServiceViewModel = hiltViewModel<OfferAServiceViewModel, OfferAServiceViewModelFactory> {
+        it.create(rialtoUi)
+    },
     onBack: () -> Unit,
 ) {
     val rialto by viewModel.rialtoUiFlow.collectAsState()
+    val isCreated by viewModel.isCreated.collectAsState()
+    if (isCreated) {
+        onBack()
+        viewModel.invalidate()
+    }
     Surface {
         Scaffold(
             topBar = {
@@ -96,7 +107,7 @@ fun OfferAServiceScreen(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 colors = CardDefaults.elevatedCardColors().copy(
-                                    containerColor = Color.White
+                                    containerColor = TextFieldDefaults.colors().unfocusedContainerColor
                                 )
                             ) {
                                 Text(
@@ -195,7 +206,10 @@ fun OfferAServiceScreen(
                             TextField(
                                 modifier = Modifier.fillMaxWidth(),
                                 value = price,
-                                onValueChange = viewModel::onPriceChange
+                                onValueChange = viewModel::onPriceChange,
+                                keyboardOptions = KeyboardOptions.Default.copy(
+                                    keyboardType = KeyboardType.Decimal
+                                )
                             )
                             Button(
                                 modifier = Modifier
@@ -213,13 +227,4 @@ fun OfferAServiceScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewOfferAServiceScreen() {
-    OfferAServiceScreen(
-        viewModel = OfferAServiceViewModel(),
-        onBack = {}
-    )
 }
