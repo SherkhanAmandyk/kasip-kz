@@ -59,6 +59,9 @@ dependencies {
     implementation(project(":settings"))
     implementation(project(":designcore"))
     implementation(project(":rialto"))
+    implementation(project(":chat"))
+    implementation(project(":order"))
+    implementation(project(":works"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

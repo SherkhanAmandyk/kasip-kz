@@ -31,6 +31,9 @@ fun EmailTextField(
         value = text,
         onValueChange = onTextChange,
         singleLine = true,
+        placeholder = {
+            Text(text = "Email")
+        },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
         )

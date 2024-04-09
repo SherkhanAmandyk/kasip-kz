@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,12 +31,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.R
+import kz.kasip.chat.navigation.chatsScreen
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.MainTopAppBar
 import kz.kasip.onboarding.navigation.onboarding
-import kz.kasip.rialto.navigation.mainRialtoScreen
+import kz.kasip.order.navigation.orderScreen
 import kz.kasip.rialto.navigation.rialtoScreen
+import kz.kasip.settings.ui.settings.settingsScreen
 import kz.kasip.usecase.LogOutUseCase
+import kz.kasip.works.navigation.hiddenWorksScreen
+import kz.kasip.works.navigation.myWorksScreen
 
 @Composable
 fun MainScreen(
@@ -50,6 +55,9 @@ fun MainScreen(
 
     val onItemClick: (String) -> Unit = {
         when (it) {
+            "My Works" -> navigateTo(myWorksScreen)
+            "Hidden" -> navigateTo(hiddenWorksScreen)
+            "Settings" -> navigateTo(settingsScreen)
             "Rialto" -> navigateTo(rialtoScreen)
         }
     }
@@ -60,31 +68,63 @@ fun MainScreen(
             bottomBar = {
                 BottomAppBar(
                     actions = {
-                        Icon(
-                            modifier = Modifier
-                                .weight(1F)
-                                .padding(bottom = 8.dp),
-                            painter = painterResource(id = R.drawable.icon_catalog),
-                            contentDescription = stringResource(id = R.string.catalog)
-                        )
-                        Icon(
-                            modifier = Modifier
-                                .weight(1F)
-                                .padding(bottom = 8.dp),
-                            painter = painterResource(id = R.drawable.icon_calendar),
-                            contentDescription = stringResource(id = R.string.calendar)
-                        )
-                        Icon(
-                            modifier = Modifier
-                                .weight(1F)
-                                .padding(bottom = 8.dp),
-                            painter = painterResource(id = R.drawable.icon_notification),
-                            contentDescription = stringResource(id = R.string.notification)
-                        )
-                        Icon(
+                        IconButton(
                             modifier = Modifier.weight(1F),
-                            painter = painterResource(id = R.drawable.icon_works),
-                            contentDescription = stringResource(id = R.string.works)
+                            onClick = {
+                                navigateTo(orderScreen)
+                            },
+                            content = {
+                                Icon(
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    painter = painterResource(id = R.drawable.icon_catalog),
+                                    contentDescription = stringResource(id = R.string.catalog)
+                                )
+                            }
+                        )
+                        IconButton(
+                            modifier = Modifier.weight(1F),
+                            onClick = {
+                                navigateTo(chatsScreen)
+                            },
+                            content = {
+                                Icon(
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    painter = painterResource(id = R.drawable.icon_chats),
+                                    contentDescription = stringResource(id = R.string.calendar)
+                                )
+                            }
+                        )
+                        IconButton(
+                            modifier = Modifier.weight(1F),
+                            onClick = {},
+                            content = {
+                                Icon(
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    painter = painterResource(id = R.drawable.icon_calendar),
+                                    contentDescription = stringResource(id = R.string.calendar)
+                                )
+                            }
+                        )
+                        IconButton(
+                            modifier = Modifier.weight(1F),
+                            onClick = {},
+                            content = {
+                                Icon(
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    painter = painterResource(id = R.drawable.icon_notification),
+                                    contentDescription = stringResource(id = R.string.notification)
+                                )
+                            }
+                        )
+                        IconButton(
+                            modifier = Modifier.weight(1F),
+                            onClick = {},
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_works),
+                                    contentDescription = stringResource(id = R.string.works)
+                                )
+                            }
                         )
                     },
                     contentPadding = PaddingValues(
@@ -94,11 +134,21 @@ fun MainScreen(
                 )
             }
         ) {
-            Box(modifier = Modifier.padding(it).fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxWidth()
+            ) {
                 Column(
-                    modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()
+                    modifier = Modifier
+                        .verticalScroll(scrollState)
+                        .fillMaxWidth()
                 ) {
-                    MainTopAppBar()
+                    val user by viewModel.userFlow.collectAsState()
+                    val profile by viewModel.profileFlow.collectAsState()
+                    MainTopAppBar(
+                        name = profile?.name ?: user?.email ?: ""
+                    )
                     uiState.sections.forEach {
                         Section(
                             it,
@@ -141,7 +191,9 @@ fun Section(
                     onClick = { onItemClick(it) }
                 ) {
                     Text(
-                        modifier = Modifier.padding(textPadding).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(textPadding)
+                            .fillMaxWidth(),
                         text = it,
                         fontSize = 21.sp
                     )
@@ -163,7 +215,8 @@ fun PreviewMainScreen() {
                         MODE_PRIVATE
                     )
                 )
-            )
+            ),
+            DataStoreRepository(LocalContext.current.getSharedPreferences("", MODE_PRIVATE))
         )
     ) {}
 }

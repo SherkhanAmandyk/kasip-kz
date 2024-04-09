@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.EmailTextField
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.PasswordTextField
+import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.onboarding.R
 import kz.kasip.onboarding.usecase.RegistrationUseCase
 
@@ -82,7 +84,7 @@ fun RegistrationScreen(
             }
             Box(
                 Modifier
-                    .background(Color.Green)
+                    .background(PrimaryBackgroundGreen)
                     .padding(it)
                     .padding(horizontal = 10.dp)
                     .fillMaxSize(),
@@ -112,6 +114,8 @@ fun RegistrationScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 3.dp, horizontal = 88.dp),
+                        colors = ButtonDefaults.buttonColors()
+                            .copy(containerColor = PrimaryBackgroundGreen),
                         onClick = {
                             viewModel.onRegister(
                                 email.text,

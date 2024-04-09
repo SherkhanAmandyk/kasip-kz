@@ -100,7 +100,7 @@ fun SalespersonTab(
                             modifier = Modifier
                                 .width(56.dp)
                                 .height(50.dp),
-                            painter = painterResource(id = R.drawable.filter),
+                            painter = painterResource(id = kz.kasip.designcore.R.drawable.icon_profile_pic),
                             contentDescription = ""
                         )
                         Column(

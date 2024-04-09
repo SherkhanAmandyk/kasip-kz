@@ -10,12 +10,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import dagger.hilt.android.AndroidEntryPoint
+import kz.kasip.chat.navigation.chatGraph
 import kz.kasip.designcore.theme.KasipkzTheme
-import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.onboarding.navigation.onboardingGraph
+import kz.kasip.order.navigation.orderNavGraph
 import kz.kasip.rialto.navigation.rialtoNavGraph
 import kz.kasip.settings.navigation.settingsNavGraph
 import kz.kasip.ui.main.MainScreen
+import kz.kasip.works.navigation.worksNavGraph
 
 @AndroidEntryPoint
 class RootActivity : ComponentActivity() {
@@ -52,6 +54,19 @@ class RootActivity : ComponentActivity() {
                             navigateTo = { navController.navigate(it) },
                             onBack = { navController.popBackStack() }
                         )
+                        orderNavGraph(
+                            navigateTo = { navController.navigate(it) },
+                            onBack = { navController.popBackStack() }
+                        )
+                        chatGraph(
+                            onGoToChat = {
+                                navController.navigate(
+                                    route = "chatScreen/$it"
+                                )
+                            },
+                            onBack = { navController.popBackStack() }
+                        )
+                        worksNavGraph { navController.popBackStack() }
                     }
                 }
                 NavHost(navController = navController, graph = navGraph)

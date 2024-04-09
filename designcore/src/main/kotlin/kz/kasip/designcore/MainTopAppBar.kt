@@ -1,5 +1,6 @@
 package kz.kasip.designcore
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.compose.rememberImagePainter
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 
 @Composable
-fun MainTopAppBar() {
+fun MainTopAppBar(name: String) {
     val profileInfo = ConstrainedLayoutReference("profileInfo")
     val payment = ConstrainedLayoutReference("payment")
     val status = ConstrainedLayoutReference("status")
@@ -67,7 +69,7 @@ fun MainTopAppBar() {
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text(text = "Name")
+                Text(text = name)
                 Spacer(modifier = Modifier.height(32.dp))
             }
         }
@@ -155,7 +157,7 @@ fun PreviewMainTopAppBar() {
         Scaffold(
             topBar = {
                 Box(modifier = Modifier.fillMaxWidth()) {
-                    MainTopAppBar()
+                    MainTopAppBar("Name")
                 }
             }
         ) {
