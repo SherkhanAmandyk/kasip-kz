@@ -41,14 +41,14 @@ fun SettingsScreen(
     onBack: () -> Unit,
 ) {
     Surface {
-        Scaffold(
-            topBar = {
-                KasipTopAppBar(
-                    title = stringResource(id = R.string.settings),
-                    onBack = onBack
-                )
-            }
-        ) {
+            Scaffold(
+                topBar = {
+                    KasipTopAppBar(
+                        title = stringResource(id = R.string.settings),
+                        onBack = onBack
+                    )
+                }
+            ) {
             Box(modifier = Modifier.padding(it)) {
                 Column {
                     val settings by viewModel.settingsList.collectAsState()

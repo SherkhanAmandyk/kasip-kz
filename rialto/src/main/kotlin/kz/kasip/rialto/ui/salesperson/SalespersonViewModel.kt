@@ -20,6 +20,7 @@ import kz.kasip.data.mappers.toRubric
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.rialto.RialtoUi
 import kz.kasip.rialto.ui.main.salesperson.toRilatoUi
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -99,5 +100,6 @@ private fun DocumentSnapshot.toRialtoOffers(): RialtoOffer = RialtoOffer(
     id = id,
     rialtoId = getString("rialtoId") ?: "",
     offererUserId = getString("offererUserId") ?: "",
-    price = getString("price") ?: ""
+    price = getString("price") ?: "",
+    sentAt = getDate("sentAt") ?: Date()
 )

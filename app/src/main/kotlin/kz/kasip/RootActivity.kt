@@ -14,10 +14,13 @@ import kz.kasip.chat.navigation.chatGraph
 import kz.kasip.designcore.theme.KasipkzTheme
 import kz.kasip.onboarding.navigation.onboardingGraph
 import kz.kasip.order.navigation.orderNavGraph
+import kz.kasip.response.ui.MyResponsesScreen
 import kz.kasip.rialto.navigation.rialtoNavGraph
 import kz.kasip.settings.navigation.settingsNavGraph
 import kz.kasip.ui.main.MainScreen
 import kz.kasip.works.navigation.worksNavGraph
+
+val myResposesScreen = "myResposesScreen"
 
 @AndroidEntryPoint
 class RootActivity : ComponentActivity() {
@@ -67,6 +70,11 @@ class RootActivity : ComponentActivity() {
                             onBack = { navController.popBackStack() }
                         )
                         worksNavGraph { navController.popBackStack() }
+                        composable(myResposesScreen) {
+                            MyResponsesScreen {
+                                navController.popBackStack()
+                            }
+                        }
                     }
                 }
                 NavHost(navController = navController, graph = navGraph)

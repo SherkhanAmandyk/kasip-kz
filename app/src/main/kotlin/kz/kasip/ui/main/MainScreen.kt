@@ -34,6 +34,7 @@ import kz.kasip.R
 import kz.kasip.chat.navigation.chatsScreen
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.MainTopAppBar
+import kz.kasip.myResposesScreen
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.order.navigation.orderScreen
 import kz.kasip.rialto.navigation.rialtoScreen
@@ -55,6 +56,7 @@ fun MainScreen(
 
     val onItemClick: (String) -> Unit = {
         when (it) {
+            "My Response" -> navigateTo(myResposesScreen)
             "My Works" -> navigateTo(myWorksScreen)
             "Hidden" -> navigateTo(hiddenWorksScreen)
             "Settings" -> navigateTo(settingsScreen)

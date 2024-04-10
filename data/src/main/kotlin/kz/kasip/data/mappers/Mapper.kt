@@ -1,8 +1,11 @@
 package kz.kasip.data.mappers
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import kz.kasip.data.entities.Chat
 import kz.kasip.data.entities.Message
+import kz.kasip.data.entities.Rialto
+import kz.kasip.data.entities.RialtoOffer
 import kz.kasip.data.entities.Rubric
 import kz.kasip.data.entities.Subrubric
 import kz.kasip.data.entities.Work
@@ -49,4 +52,24 @@ fun DocumentSnapshot.toWork(): Work = Work(
     viewedBy = get("viewedBy") as List<String>,
     isHidden = getBoolean("isHidden") == true,
     isArchived = getBoolean("isArchived") == true,
+)
+
+fun DocumentSnapshot.toRialtoOffer(): RialtoOffer = RialtoOffer(
+    id = id,
+    rialtoId = getString("rialtoId") ?: "",
+    offererUserId = getString("offererUserId") ?: "",
+    price = getString("price") ?: "",
+    sentAt = getDate("sentAt") ?: Date(),
+)
+
+fun DocumentSnapshot.toRialto(): Rialto = Rialto(
+    id = id,
+    rubricId = getString("rubricId") ?: "",
+    subrubricId = getString("subrubricId") ?: "",
+    isActive = getBoolean("isActive") == true,
+    name = getString("name") ?: "",
+    description = getString("description") ?: "",
+    price = getString("price") ?: "",
+    buyerUserId = getString("buyerUserId") ?: "",
+    time = getTimestamp("time") ?: Timestamp(Date()),
 )

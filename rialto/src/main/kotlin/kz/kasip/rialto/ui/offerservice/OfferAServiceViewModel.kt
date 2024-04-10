@@ -16,6 +16,7 @@ import kotlinx.coroutines.tasks.await
 import kz.kasip.data.entities.RialtoOffer
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.rialto.RialtoUi
+import java.util.Date
 
 @HiltViewModel(assistedFactory = OfferAServiceViewModelFactory::class)
 class OfferAServiceViewModel @AssistedInject constructor(
@@ -47,7 +48,8 @@ class OfferAServiceViewModel @AssistedInject constructor(
                         id = "",
                         rialtoId = rialtoUi.id,
                         offererUserId = dataStoreRepository.getUserId() ?: "",
-                        priceFlow.value.text
+                        priceFlow.value.text,
+                        Date()
                     )
                 )
                 .await()

@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":chat"))
     implementation(project(":order"))
     implementation(project(":works"))
+    implementation(project(":response"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
