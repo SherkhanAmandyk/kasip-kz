@@ -30,7 +30,7 @@ fun KasipDialog(
     title: String = "",
     buttons: List<ButtonUiState> = emptyList(),
     onDismissRequest: () -> Unit,
-    onClick: (ButtonUiState) -> Unit,
+    onClick: (ButtonUiState) -> Unit = {},
 ) {
     Dialog(onDismissRequest = onDismissRequest) {
         Surface(
@@ -53,8 +53,11 @@ fun KasipDialog(
                                 .widthIn(min = 128.dp)
                                 .heightIn(max = 28.dp),
                             contentPadding = PaddingValues(0.dp),
-                            colors = filledTonalButtonColors(containerColor = PrimaryBackgroundGreen),
-                            onClick = { onClick(button) }
+                            colors = filledTonalButtonColors(containerColor = button.color),
+                            onClick = {
+                                onClick(button)
+                                onDismissRequest()
+                            }
                         ) {
                             Text(text = button.text, color = button.textColor)
                         }

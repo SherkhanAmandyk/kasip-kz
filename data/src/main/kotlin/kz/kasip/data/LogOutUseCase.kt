@@ -1,4 +1,4 @@
-package kz.kasip.usecase
+package kz.kasip.data
 
 import kz.kasip.data.repository.DataStoreRepository
 import javax.inject.Inject

@@ -42,6 +42,8 @@ class RegistrationUseCase @Inject constructor(
                     User(
                         id = "",
                         email = email,
+                        login = "",
+                        phone = "",
                         password = password,
                         null
                     )

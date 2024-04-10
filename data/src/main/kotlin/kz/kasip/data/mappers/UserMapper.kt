@@ -12,6 +12,8 @@ const val userDeletedAt = "deletedAt"
 fun DocumentSnapshot.toUser() = User(
     id = id,
     email = getString("email") ?: "Undefined",
+    login = getString("login") ?: "Undefined",
+    phone = getString("phone") ?: "Undefined",
     password = getString("password") ?: "",
     deletedAt = getTimestamp("deletedAt")
 )

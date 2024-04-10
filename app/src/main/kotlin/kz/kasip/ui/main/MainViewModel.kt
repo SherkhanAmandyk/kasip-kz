@@ -5,19 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kz.kasip.data.entities.Profile
 import kz.kasip.data.entities.User
-import kz.kasip.data.entities.Work
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.repository.DataStoreRepository
-import kz.kasip.usecase.LogOutUseCase
+import kz.kasip.data.LogOutUseCase
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class MainViewModel @Inject constructor(

@@ -4,6 +4,7 @@ coilCompose = "2.6.0"
 constraintlayoutCompose = "1.0.1"
 datastore = "1.0.0"
 firebaseBom = "32.7.4"
+firebaseMessaging = "23.4.1"
 glide = "4.16.0"
 hiltAndroid = "2.50"
 hiltNavigationCompose = "1.2.0"
@@ -39,6 +40,7 @@ androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedat
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestorm = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

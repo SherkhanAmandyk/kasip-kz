@@ -12,6 +12,7 @@ import androidx.navigation.createGraph
 import dagger.hilt.android.AndroidEntryPoint
 import kz.kasip.chat.navigation.chatGraph
 import kz.kasip.designcore.theme.KasipkzTheme
+import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.onboarding.navigation.onboardingGraph
 import kz.kasip.order.navigation.orderNavGraph
 import kz.kasip.response.ui.MyResponsesScreen
@@ -42,6 +43,14 @@ class RootActivity : ComponentActivity() {
                             MainScreen { navController.navigate(it) }
                         }
                         settingsNavGraph(
+                            navigateToOnboarding = {
+                                navController.navigate(route = onboarding) {
+                                    popUpTo(navController.graph.id) {
+                                        inclusive = true
+                                    }
+                                }
+                                navController.clearBackStack(onboarding)
+                            },
                             navigateTo = { navController.navigate(it) },
                             onBack = { navController.popBackStack() }
                         )

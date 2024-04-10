@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +17,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,14 +32,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.R
 import kz.kasip.chat.navigation.chatsScreen
+import kz.kasip.data.LogOutUseCase
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.MainTopAppBar
+import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.myResposesScreen
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.order.navigation.orderScreen
 import kz.kasip.rialto.navigation.rialtoScreen
 import kz.kasip.settings.ui.settings.settingsScreen
-import kz.kasip.usecase.LogOutUseCase
 import kz.kasip.works.navigation.hiddenWorksScreen
 import kz.kasip.works.navigation.myWorksScreen
 
@@ -68,72 +69,91 @@ fun MainScreen(
     Surface {
         Scaffold(
             bottomBar = {
-                BottomAppBar(
-                    actions = {
-                        IconButton(
-                            modifier = Modifier.weight(1F),
-                            onClick = {
-                                navigateTo(orderScreen)
-                            },
-                            content = {
-                                Icon(
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    painter = painterResource(id = R.drawable.icon_catalog),
-                                    contentDescription = stringResource(id = R.string.catalog)
-                                )
-                            }
+                Column {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = DialogBackground,
+                        onClick = { viewModel.logOut() }
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .padding(vertical = 16.dp)
+                                .padding(start = 40.dp),
+                            text = "Log Out",
+                            fontSize = 20.sp,
+                            color = Color.Red
                         )
-                        IconButton(
-                            modifier = Modifier.weight(1F),
-                            onClick = {
-                                navigateTo(chatsScreen)
-                            },
-                            content = {
-                                Icon(
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    painter = painterResource(id = R.drawable.icon_chats),
-                                    contentDescription = stringResource(id = R.string.calendar)
-                                )
-                            }
+                    }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    BottomAppBar(
+                        actions = {
+                            IconButton(
+                                modifier = Modifier.weight(1F),
+                                onClick = {
+                                    navigateTo(rialtoScreen)
+                                },
+                                content = {
+                                    Icon(
+                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        painter = painterResource(id = R.drawable.icon_catalog),
+                                        contentDescription = stringResource(id = R.string.catalog)
+                                    )
+                                }
+                            )
+                            IconButton(
+                                modifier = Modifier.weight(1F),
+                                onClick = {
+                                    navigateTo(chatsScreen)
+                                },
+                                content = {
+                                    Icon(
+                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        painter = painterResource(id = R.drawable.icon_chats),
+                                        contentDescription = stringResource(id = R.string.calendar)
+                                    )
+                                }
+                            )
+                            IconButton(
+                                modifier = Modifier.weight(1F),
+                                onClick = {
+                                    navigateTo(orderScreen)
+                                },
+                                content = {
+                                    Icon(
+                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        painter = painterResource(id = R.drawable.icon_calendar),
+                                        contentDescription = stringResource(id = R.string.calendar)
+                                    )
+                                }
+                            )
+//                            IconButton(
+//                                modifier = Modifier.weight(1F),
+//                                onClick = {},
+//                                content = {
+//                                    Icon(
+//                                        modifier = Modifier.padding(bottom = 8.dp),
+//                                        painter = painterResource(id = R.drawable.icon_notification),
+//                                        contentDescription = stringResource(id = R.string.notification)
+//                                    )
+//                                }
+//                            )
+                            IconButton(
+                                modifier = Modifier.weight(1F),
+                                onClick = {},
+                                content = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.icon_works),
+                                        contentDescription = stringResource(id = R.string.works)
+                                    )
+                                }
+                            )
+                        },
+                        contentPadding = PaddingValues(
+                            bottom = 14.dp,
+                            top = 28.dp
                         )
-                        IconButton(
-                            modifier = Modifier.weight(1F),
-                            onClick = {},
-                            content = {
-                                Icon(
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    painter = painterResource(id = R.drawable.icon_calendar),
-                                    contentDescription = stringResource(id = R.string.calendar)
-                                )
-                            }
-                        )
-                        IconButton(
-                            modifier = Modifier.weight(1F),
-                            onClick = {},
-                            content = {
-                                Icon(
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    painter = painterResource(id = R.drawable.icon_notification),
-                                    contentDescription = stringResource(id = R.string.notification)
-                                )
-                            }
-                        )
-                        IconButton(
-                            modifier = Modifier.weight(1F),
-                            onClick = {},
-                            content = {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.icon_works),
-                                    contentDescription = stringResource(id = R.string.works)
-                                )
-                            }
-                        )
-                    },
-                    contentPadding = PaddingValues(
-                        bottom = 14.dp,
-                        top = 28.dp
                     )
-                )
+                }
             }
         ) {
             Box(
@@ -151,16 +171,13 @@ fun MainScreen(
                     MainTopAppBar(
                         name = profile?.name ?: user?.email ?: ""
                     )
+                    val textPadding = PaddingValues(top = 24.dp, start = 40.dp, bottom = 12.dp)
                     uiState.sections.forEach {
                         Section(
                             it,
+                            textPadding,
                             onItemClick
                         )
-                    }
-                    TextButton(onClick = {
-                        viewModel.logOut()
-                    }) {
-                        Text(text = "Log Out")
                     }
                 }
             }
@@ -171,10 +188,10 @@ fun MainScreen(
 @Composable
 fun Section(
     section: Pair<String, List<String>>,
+    textPadding: PaddingValues,
     onItemClick: (String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        val textPadding = PaddingValues(top = 24.dp, start = 40.dp, bottom = 12.dp)
         Text(
             modifier = Modifier.padding(textPadding),
             text = section.first,

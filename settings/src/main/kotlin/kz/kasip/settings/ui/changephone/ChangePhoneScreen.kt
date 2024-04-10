@@ -1,4 +1,4 @@
-package kz.kasip.settings.ui.changeemail
+package kz.kasip.settings.ui.changephone
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,14 +23,14 @@ import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.settings.R
 
 @Composable
-fun ChangeEmailScreen(
-    viewModel: ChangeEmailViewModel = hiltViewModel(),
+fun ChangePhoneScreen(
+    viewModel: ChangePhoneViewModel = hiltViewModel(),
     onBack: () -> Unit,
 ) {
-    val isEmailInvalid by viewModel.isEmailInvalidFlow.collectAsState()
-    if (isEmailInvalid) {
+    val isPhoneInvalid by viewModel.isPhoneInvalidFlow.collectAsState()
+    if (isPhoneInvalid) {
         KasipDialog(
-            onDismissRequest = { viewModel.isEmailInvalidFlow.update { false } },
+            onDismissRequest = { viewModel.isPhoneInvalidFlow.update { false } },
             buttons = listOf(ButtonUiState(text = "Ok"))
         )
     }
@@ -38,7 +38,7 @@ fun ChangeEmailScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.change_email),
+                    title = "Change phone",
                     onBack = onBack
                 )
             }
@@ -53,7 +53,7 @@ fun ChangeEmailScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.email))
+                    Text(text = "Phone")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
@@ -61,7 +61,7 @@ fun ChangeEmailScreen(
                         onValueChange = viewModel::onTextChange
                     )
                     Button(onClick = { viewModel.onSave() }) {
-                        Text(text = stringResource(id = R.string.save_email))
+                        Text(text = "Save phone")
                     }
                 }
             }

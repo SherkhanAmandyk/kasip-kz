@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -21,81 +20,122 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.flow.update
+import kz.kasip.designcore.ButtonUiState
+import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.theme.Divider
+import kz.kasip.designcore.theme.GB
 import kz.kasip.designcore.theme.RedBackground
 import kz.kasip.settings.R
+import kz.kasip.settings.navigation.changeEmailScreen
+import kz.kasip.settings.navigation.changeLoginScreen
+import kz.kasip.settings.navigation.changePasswordScreen
+import kz.kasip.settings.navigation.changePhoneScreen
 import kz.kasip.designcore.R as DesignR
 
 const val settingsScreen = "settingsScreen"
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
+    navigateToOnboarding: () -> Unit,
     navigateTo: (String) -> Unit,
     onBack: () -> Unit,
 ) {
+    val showDialog by viewModel.showDeleteDialog.collectAsState()
+    if (showDialog) {
+        KasipDialog(
+            title = "Do you want to delete your account?",
+            onDismissRequest = { viewModel.showDeleteDialog.update { false } },
+            buttons = listOf(
+                ButtonUiState("Yes", color = GB),
+                ButtonUiState("No", color = GB)
+            )
+        ) {
+            if (it.text == "Yes") {
+                viewModel.deleteAccount()
+            }
+        }
+    }
+
+    val isDeleted by viewModel.isDeleted.collectAsState()
+    if (isDeleted) {
+        navigateToOnboarding()
+        viewModel.isDeleted.update { false }
+    }
+
     Surface {
-            Scaffold(
-                topBar = {
-                    KasipTopAppBar(
-                        title = stringResource(id = R.string.settings),
-                        onBack = onBack
-                    )
-                }
-            ) {
+        Scaffold(
+            topBar = {
+                KasipTopAppBar(
+                    title = stringResource(id = R.string.settings),
+                    onBack = onBack
+                )
+            }
+        ) {
             Box(modifier = Modifier.padding(it)) {
                 Column {
                     val settings by viewModel.settingsList.collectAsState()
 
                     settings.forEach {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 24.dp)
+
+                        Surface(
+                            onClick = {
+                                when (it) {
+                                    is Setting.Password -> navigateTo(changePasswordScreen)
+                                    is Setting.Email -> navigateTo(changeEmailScreen)
+                                    is Setting.Login -> navigateTo(changeLoginScreen)
+                                    is Setting.Phone -> navigateTo(changePhoneScreen)
+                                }
+                            }
                         ) {
-                            Row(
+                            Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 14.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                    .padding(top = 24.dp)
                             ) {
-                                Text(
-                                    text = it.name,
-                                    fontSize = 22.sp
-                                )
                                 Row(
-                                    modifier = Modifier.widthIn(min = 150.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 14.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text(
-                                        text = it.value,
-                                        fontSize = 17.sp
+                                        text = it.name,
+                                        fontSize = 22.sp
                                     )
-                                    Icon(
-                                        painter = painterResource(id = DesignR.drawable.icon_forward),
-                                        contentDescription = "Go to ${it.name} ${it.value}"
-                                    )
+                                    Row(
+                                        modifier = Modifier.widthIn(min = 150.dp),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Text(
+                                            text = it.value,
+                                            fontSize = 17.sp
+                                        )
+                                        Icon(
+                                            painter = painterResource(id = DesignR.drawable.icon_forward),
+                                            contentDescription = "Go to ${it.name} ${it.value}"
+                                        )
+                                    }
                                 }
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(1.dp)
+                                        .background(color = Divider),
+                                )
                             }
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(1.dp)
-                                    .background(color = Divider),
-                            )
                         }
                     }
                     Spacer(modifier = Modifier.height(54.dp))
                     Surface(
                         color = RedBackground,
                         onClick = {
-                            navigateTo("deleteAccount")
+                            viewModel.showDeleteDialog.update { true }
                         }
                     ) {
                         Text(
@@ -110,14 +150,4 @@ fun SettingsScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSettingsScreen() {
-    SettingsScreen(
-        viewModel = SettingsViewModel(),
-        navigateTo = {},
-        onBack = {}
-    )
 }

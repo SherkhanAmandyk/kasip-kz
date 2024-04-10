@@ -1,4 +1,4 @@
-package kz.kasip.settings.ui.changeemail
+package kz.kasip.settings.ui.changepassword
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,32 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.flow.update
-import kz.kasip.designcore.ButtonUiState
-import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
-import kz.kasip.settings.R
+import kz.kasip.designcore.PasswordTextField
 
 @Composable
-fun ChangeEmailScreen(
-    viewModel: ChangeEmailViewModel = hiltViewModel(),
+fun ChangePasswordScreen(
+    viewModel: ChangePasswordViewModel = hiltViewModel(),
     onBack: () -> Unit,
 ) {
-    val isEmailInvalid by viewModel.isEmailInvalidFlow.collectAsState()
-    if (isEmailInvalid) {
-        KasipDialog(
-            onDismissRequest = { viewModel.isEmailInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
-        )
-    }
     Surface {
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.change_email),
+                    title = "Change password",
                     onBack = onBack
                 )
             }
@@ -53,15 +42,14 @@ fun ChangeEmailScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.email))
-                    val text by viewModel.textFlow.collectAsState()
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = text,
-                        onValueChange = viewModel::onTextChange
-                    )
+                    Text(text = "Password")
+                    val password by viewModel.text1Flow.collectAsState()
+                    PasswordTextField(password, viewModel::onText1Change)
+                    Text(text = "Repeat Password")
+                    val repeatPassword by viewModel.text2Flow.collectAsState()
+                    PasswordTextField(repeatPassword, viewModel::onText2Change)
                     Button(onClick = { viewModel.onSave() }) {
-                        Text(text = stringResource(id = R.string.save_email))
+                        Text(text = "Save Password")
                     }
                 }
             }

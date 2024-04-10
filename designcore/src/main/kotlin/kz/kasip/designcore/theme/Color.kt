@@ -11,6 +11,8 @@ val CB = Color(0xFFD9D9D9)
 val YB = Color(0x61FBBC05)
 val YT = Color(0xFFFBBC05)
 
+val GB = Color(0xFF5C5C5C)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)

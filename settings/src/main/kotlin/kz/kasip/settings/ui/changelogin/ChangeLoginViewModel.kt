@@ -1,4 +1,4 @@
-package kz.kasip.settings.ui.changeemail
+package kz.kasip.settings.ui.changelogin
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
@@ -15,12 +15,10 @@ import kz.kasip.data.repository.DataStoreRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangeEmailViewModel @Inject constructor(
+class ChangeLoginViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
     val textFlow = MutableStateFlow(TextFieldValue(text = ""))
-
-    val isEmailInvalidFlow = MutableStateFlow(false)
 
     init {
         viewModelScope.launch {
@@ -30,7 +28,7 @@ class ChangeEmailViewModel @Inject constructor(
                         .get()
                         .await()
                         .toUser()
-                        .email
+                        .login
                 )
             }
         }
@@ -41,15 +39,11 @@ class ChangeEmailViewModel @Inject constructor(
     }
 
     fun onSave() {
-        val newEmail = textFlow.value.text
-        if (!Regex("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}").matches(newEmail)) {
-            isEmailInvalidFlow.update { true }
-        } else {
-            viewModelScope.launch {
-                Firebase.firestore.document("users/${dataStoreRepository.getUserId()}")
-                    .update("email", newEmail)
-                    .await()
-            }
+        val newLogin = textFlow.value.text
+        viewModelScope.launch {
+            Firebase.firestore.document("users/${dataStoreRepository.getUserId()}")
+                .update("login", newLogin)
+                .await()
         }
     }
 }

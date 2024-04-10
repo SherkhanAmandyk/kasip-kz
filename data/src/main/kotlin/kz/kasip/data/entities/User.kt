@@ -5,6 +5,8 @@ import com.google.firebase.Timestamp
 class User(
     val id: String,
     val email: String,
+    val login: String,
+    val phone: String,
     val password: String,
-    val deletedAt: Timestamp?
+    val deletedAt: Timestamp?,
 )

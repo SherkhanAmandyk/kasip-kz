@@ -1,4 +1,4 @@
-package kz.kasip.settings.ui.changeemail
+package kz.kasip.settings.ui.changepassword
 
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
@@ -15,39 +15,32 @@ import kz.kasip.data.repository.DataStoreRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ChangeEmailViewModel @Inject constructor(
+class ChangePasswordViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
-    val textFlow = MutableStateFlow(TextFieldValue(text = ""))
+    val text1Flow = MutableStateFlow(TextFieldValue(text = ""))
+    val text2Flow = MutableStateFlow(TextFieldValue(text = ""))
 
     val isEmailInvalidFlow = MutableStateFlow(false)
 
-    init {
-        viewModelScope.launch {
-            textFlow.update {
-                TextFieldValue(
-                    text = Firebase.firestore.document("users/${dataStoreRepository.getUserId()}")
-                        .get()
-                        .await()
-                        .toUser()
-                        .email
-                )
-            }
-        }
+    fun onText1Change(newText: TextFieldValue) {
+        text1Flow.update { newText }
     }
 
-    fun onTextChange(newText: TextFieldValue) {
-        textFlow.update { newText }
+    fun onText2Change(newText: TextFieldValue) {
+        text2Flow.update { newText }
     }
+
 
     fun onSave() {
-        val newEmail = textFlow.value.text
-        if (!Regex("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}").matches(newEmail)) {
+        val newPassword1 = text1Flow.value.text
+        val newPassword2 = text2Flow.value.text
+        if (newPassword1 != newPassword2) {
             isEmailInvalidFlow.update { true }
         } else {
             viewModelScope.launch {
                 Firebase.firestore.document("users/${dataStoreRepository.getUserId()}")
-                    .update("email", newEmail)
+                    .update("password", newPassword1)
                     .await()
             }
         }

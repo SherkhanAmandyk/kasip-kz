@@ -1,4 +1,4 @@
-package kz.kasip.settings.ui.changeemail
+package kz.kasip.settings.ui.changelogin
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,32 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.flow.update
-import kz.kasip.designcore.ButtonUiState
-import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
-import kz.kasip.settings.R
 
 @Composable
-fun ChangeEmailScreen(
-    viewModel: ChangeEmailViewModel = hiltViewModel(),
+fun ChangeLoginScreen(
+    viewModel: ChangeLoginViewModel = hiltViewModel(),
     onBack: () -> Unit,
 ) {
-    val isEmailInvalid by viewModel.isEmailInvalidFlow.collectAsState()
-    if (isEmailInvalid) {
-        KasipDialog(
-            onDismissRequest = { viewModel.isEmailInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
-        )
-    }
     Surface {
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.change_email),
+                    title = "Change login",
                     onBack = onBack
                 )
             }
@@ -53,7 +41,7 @@ fun ChangeEmailScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.email))
+                    Text(text = "Login")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
@@ -61,7 +49,7 @@ fun ChangeEmailScreen(
                         onValueChange = viewModel::onTextChange
                     )
                     Button(onClick = { viewModel.onSave() }) {
-                        Text(text = stringResource(id = R.string.save_email))
+                        Text(text = "Save Login")
                     }
                 }
             }
