@@ -18,9 +18,10 @@ class SignInUseCase @Inject constructor(
             is Resource.Failure -> Error(userResource.e)
             is Resource.Success -> userResource.value.let {
                 when {
-                    it == null || it.password != password -> WrongEmailOrPassword
+                    it == null || it.first.password != password -> WrongEmailOrPassword
                     else -> {
-                        dataStoreRepository.saveUserId(it.id)
+                        dataStoreRepository.saveUserId(it.first.id)
+                        dataStoreRepository.saveProfileId(it.second.id)
                         SignedIn
                     }
                 }

@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.R
+import kz.kasip.catalog.catalogRubricsScreen
+import kz.kasip.chat.navigation.blockListScreen
 import kz.kasip.chat.navigation.chatsScreen
 import kz.kasip.data.LogOutUseCase
 import kz.kasip.data.repository.DataStoreRepository
@@ -39,6 +41,7 @@ import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.myResposesScreen
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.order.navigation.orderScreen
+import kz.kasip.profile.ui.profile.profileScreen
 import kz.kasip.rialto.navigation.rialtoScreen
 import kz.kasip.settings.ui.settings.settingsScreen
 import kz.kasip.works.navigation.hiddenWorksScreen
@@ -61,7 +64,9 @@ fun MainScreen(
             "My Works" -> navigateTo(myWorksScreen)
             "Hidden" -> navigateTo(hiddenWorksScreen)
             "Settings" -> navigateTo(settingsScreen)
+            "Profile" -> navigateTo(profileScreen)
             "Rialto" -> navigateTo(rialtoScreen)
+            "Block list" -> navigateTo(blockListScreen)
         }
     }
     val scrollState = rememberScrollState()
@@ -126,20 +131,22 @@ fun MainScreen(
                                     )
                                 }
                             )
-//                            IconButton(
-//                                modifier = Modifier.weight(1F),
-//                                onClick = {},
-//                                content = {
-//                                    Icon(
-//                                        modifier = Modifier.padding(bottom = 8.dp),
-//                                        painter = painterResource(id = R.drawable.icon_notification),
-//                                        contentDescription = stringResource(id = R.string.notification)
-//                                    )
-//                                }
-//                            )
                             IconButton(
                                 modifier = Modifier.weight(1F),
                                 onClick = {},
+                                content = {
+                                    Icon(
+                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        painter = painterResource(id = R.drawable.icon_notification),
+                                        contentDescription = stringResource(id = R.string.notification)
+                                    )
+                                }
+                            )
+                            IconButton(
+                                modifier = Modifier.weight(1F),
+                                onClick = {
+                                    navigateTo(catalogRubricsScreen)
+                                },
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.icon_works),

@@ -4,10 +4,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import kz.kasip.chat.ui.blocklist.BlockListScreen
 import kz.kasip.chat.ui.chat.ChatScreen
 import kz.kasip.chat.ui.chats.ChatsScreen
 
 const val chatsScreen = "chatsScreen"
+const val blockListScreen = "blockListScreen"
 const val chatScreen = "chatScreen/{chatId}"
 
 fun NavGraphBuilder.chatGraph(
@@ -28,5 +30,8 @@ fun NavGraphBuilder.chatGraph(
             chatId = it.arguments?.getString("chatId", "") ?: "",
             onBack = onBack
         )
+    }
+    composable(blockListScreen) {
+        BlockListScreen(onBack = onBack)
     }
 }

@@ -2,6 +2,8 @@ package kz.kasip.data.mappers
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
+import kz.kasip.data.entities.CatalogItem
+import kz.kasip.data.entities.CatalogRubric
 import kz.kasip.data.entities.Chat
 import kz.kasip.data.entities.Message
 import kz.kasip.data.entities.Rialto
@@ -30,7 +32,9 @@ fun DocumentSnapshot.toRubric(): Rubric = Rubric(
 fun DocumentSnapshot.toChat(): Chat {
     return Chat(
         id,
-        get("participantUserIds") as List<String>
+        get("participantUserIds") as List<String>,
+        (get("blockedBy") as List<String>?) ?: emptyList(),
+        getDate("deletedTill") ?: Date(0)
     )
 }
 
@@ -72,4 +76,20 @@ fun DocumentSnapshot.toRialto(): Rialto = Rialto(
     price = getString("price") ?: "",
     buyerUserId = getString("buyerUserId") ?: "",
     time = getTimestamp("time") ?: Timestamp(Date()),
+)
+
+fun DocumentSnapshot.toCatalogRubric() = CatalogRubric(
+    id = id,
+    name = getString("name") ?: "",
+    image = getDocumentReference("image")?.path?.replace(":/", "://") ?: ""
+)
+
+fun DocumentSnapshot.toCatalogItem() = CatalogItem(
+    id = id,
+    image = getDocumentReference("image")?.path?.replace(":/", "://") ?: "",
+    name = getString("name") ?: getString("name ") ?: "",
+    description = getString("description") ?: "",
+    price = getString("price") ?: getString("price ") ?: "",
+    catalogRubricsId = getString("catalog-rubrics-id") ?: "",
+    favoredBy = (get("favoredBy") as List<String>?) ?: emptyList(),
 )

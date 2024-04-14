@@ -2,7 +2,6 @@ package kz.kasip.chat.ui.chats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +18,7 @@ import kz.kasip.data.mappers.toChat
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.mappers.toUser
 import kz.kasip.data.repository.DataStoreRepository
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -88,7 +88,12 @@ class ChatsViewModel @Inject constructor(
     }
 
     private suspend fun createChat(id: String, me: String): Chat {
-        val chat = Chat("", listOf(id, me))
+        val chat = Chat(
+            id = "",
+            participantUserIds = listOf(id, me),
+            blockedBy = emptyList(),
+            deletedTill = Date(0)
+        )
         return Firebase.firestore.collection("chats")
             .add(chat)
             .await()

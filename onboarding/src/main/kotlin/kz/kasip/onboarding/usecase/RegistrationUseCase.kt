@@ -2,6 +2,7 @@ package kz.kasip.onboarding.usecase
 
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 import kz.kasip.data.Resource.Failure
 import kz.kasip.data.Resource.Success
 import kz.kasip.data.entities.Profile
@@ -51,8 +52,9 @@ class RegistrationUseCase @Inject constructor(
                 return when (user) {
                     is Failure -> Error(user.e)
                     is Success -> {
-                        Firebase.firestore.collection("profiles").add(
+                        val profile = Firebase.firestore.collection("profiles").add(
                             Profile(
+                                id = "",
                                 userId = user.value.id,
                                 name = "",
                                 info = "",
@@ -61,8 +63,12 @@ class RegistrationUseCase @Inject constructor(
                                 country = "",
                                 rate = "5.0"
                             )
-                        )
+                        ).await().let {
+                            it.update("id", it.id).await()
+                            it
+                        }
                         dataStoreRepository.saveUserId(user.value.id)
+                        dataStoreRepository.saveProfileId(profile.id)
                         RegisteredUser(user.value)
                     }
                 }

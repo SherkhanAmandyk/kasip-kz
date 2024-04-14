@@ -10,6 +10,8 @@ class MainUiState {
         ),
         "General" to listOf(
             "Settings",
+            "Profile",
+            "Block list"
         )
     )
 }

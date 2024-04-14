@@ -1,6 +1,7 @@
 package kz.kasip.data.entities
 
 data class Profile(
+    val id: String,
     val userId: String,
     val name: String,
     val info: String,
@@ -11,6 +12,7 @@ data class Profile(
 ) {
     companion object {
         val empty = Profile(
+            id = "",
             userId = "userId",
             name = "name",
             info = "info",

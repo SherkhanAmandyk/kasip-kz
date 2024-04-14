@@ -7,7 +7,9 @@ import kotlinx.coroutines.tasks.await
 import kz.kasip.data.Resource
 import kz.kasip.data.Resource.Failure
 import kz.kasip.data.Resource.Success
+import kz.kasip.data.entities.Profile
 import kz.kasip.data.entities.User
+import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.mappers.toUser
 import kz.kasip.data.mappers.userEmail
 
@@ -28,7 +30,7 @@ class UserRepository {
         }.fold(::Success, ::Failure)
     }
 
-    suspend fun findUser(email: String): Resource<User?> {
+    suspend fun findUser(email: String): Resource<Pair<User, Profile>?> {
         return runCatching {
             Firebase.firestore.collection(DOCUMENT)
                 .whereEqualTo(userEmail, email)
@@ -36,7 +38,14 @@ class UserRepository {
                 .asDeferred()
                 .await()
                 .let {
-                    it.firstOrNull()?.toUser()
+                    it.firstOrNull()?.toUser()?.let {
+                        it to Firebase.firestore.collection("profiles")
+                            .whereEqualTo("userId", it.id)
+                            .get()
+                            .await()
+                            .first()
+                            .toProfile()
+                    }
                 }
         }.fold(::Success, ::Failure)
     }

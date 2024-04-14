@@ -10,11 +10,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import dagger.hilt.android.AndroidEntryPoint
+import kz.kasip.catalog.catalogNavGraph
 import kz.kasip.chat.navigation.chatGraph
 import kz.kasip.designcore.theme.KasipkzTheme
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.onboarding.navigation.onboardingGraph
 import kz.kasip.order.navigation.orderNavGraph
+import kz.kasip.profile.navigation.profileNavGraph
 import kz.kasip.response.ui.MyResponsesScreen
 import kz.kasip.rialto.navigation.rialtoNavGraph
 import kz.kasip.settings.navigation.settingsNavGraph
@@ -83,6 +85,21 @@ class RootActivity : ComponentActivity() {
                             MyResponsesScreen {
                                 navController.popBackStack()
                             }
+                        }
+                        catalogNavGraph(
+                            navigateToCatalog = {
+                                navController.navigate(
+                                    route = "catalogScreen/$it"
+                                )
+                            }
+                        ) {
+                            navController.popBackStack()
+                        }
+                        profileNavGraph(navigateTo = {
+                            navController.navigate(it)
+                        }
+                        ) {
+                            navController.popBackStack()
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 class DataStoreRepository(private val sharedPreferences: SharedPreferences) {
     companion object {
         private const val userId = "userId"
+        private const val profileId = "profileId"
     }
 
     fun getUserId(): String? {
@@ -14,6 +15,14 @@ class DataStoreRepository(private val sharedPreferences: SharedPreferences) {
 
     fun saveUserId(userId: String) {
         sharedPreferences.edit().putString(Companion.userId, userId).apply()
+    }
+
+    fun getProfileId(): String? {
+        return sharedPreferences.getString(profileId, null)
+    }
+
+    fun saveProfileId(profileId: String) {
+        sharedPreferences.edit().putString(Companion.profileId, profileId).apply()
     }
 
     fun clear() {

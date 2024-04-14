@@ -63,6 +63,8 @@ dependencies {
     implementation(project(":order"))
     implementation(project(":works"))
     implementation(project(":response"))
+    implementation(project(":catalog"))
+    implementation(project(":profile"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

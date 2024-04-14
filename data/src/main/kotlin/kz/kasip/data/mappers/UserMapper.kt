@@ -20,6 +20,7 @@ fun DocumentSnapshot.toUser() = User(
 
 
 fun DocumentSnapshot.toProfile() = Profile(
+    id = id,
     userId = getString("userId") ?: "",
     name = getString("name") ?: "",
     info = getString("info") ?: "",
