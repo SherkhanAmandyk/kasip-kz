@@ -7,6 +7,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.Constants.MessageNotificationKeys
+import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.ktx.messaging
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -98,11 +101,32 @@ class ChatViewModel @AssistedInject constructor(
     }
 
     fun send() {
+//        params.getString(MessageNotificationKeys.TITLE);
+//        params.getString(MessageNotificationKeys.BODY);
+//        params.getString(MessageNotificationKeys.ICON);
+//        params.getString(MessageNotificationKeys.TAG);
+//        params.getString(MessageNotificationKeys.COLOR);
+//        params.getString(MessageNotificationKeys.CLICK_ACTION);
+//        params.getString(MessageNotificationKeys.CHANNEL);
+//        params.getString(MessageNotificationKeys.IMAGE_URL);
+//        params.getString(MessageNotificationKeys.TICKER);
+//        MessageNotificationKeys.ENABLE_NOTIFICATION
         viewModelScope.launch {
             Firebase.firestore.collection(messagesDoc)
                 .add(Message(dataStoreRepository.getUserId() ?: "", messageFlow.value.text, Date()))
             messageFlow.update { TextFieldValue("") }
         }
+//        Firebase.messaging.send(
+//            RemoteMessage.Builder("386790377148@fcm.googleapis.com")
+//                .setData(
+//                    mapOf(
+//                        MessageNotificationKeys.TITLE to "",
+//                        MessageNotificationKeys.BODY to "",
+//                        MessageNotificationKeys.ENABLE_NOTIFICATION to "1"
+//                    )
+//                )
+//                .build()
+//        )
     }
 
     fun toggleBlock(didIBlock: Boolean) {

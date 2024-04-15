@@ -1,4 +1,4 @@
-package kz.kasip.catalog.items
+package kz.kasip.catalog.favorite
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,44 +16,33 @@ import kotlinx.coroutines.tasks.await
 import kz.kasip.data.entities.CatalogItem
 import kz.kasip.data.mappers.toCatalogItem
 import kz.kasip.data.repository.DataStoreRepository
+import javax.inject.Inject
 
-@HiltViewModel(assistedFactory = CatalogViewModelFactory::class)
-class CatalogViewModel @AssistedInject constructor(
-    @Assisted val rubricId: String,
-    val dataStoreRepository: DataStoreRepository,
+@HiltViewModel
+class FavoriteViewModel @Inject constructor(
+    dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
     val myUserId = dataStoreRepository.getUserId()
-
-    val catalogItems = MutableStateFlow<List<CatalogItem>>(emptyList())
-    val catalogItemsWithImage: Flow<List<Triple<CatalogItem, Uri, Boolean>>>
-
-    init {
-        val myUserId = dataStoreRepository.getUserId()
-        Firebase.firestore.collection("catalog-item").addSnapshotListener { value, error ->
-            value?.map(QueryDocumentSnapshot::toCatalogItem)?.filter {
-                it.catalogRubricsId == rubricId
-            }?.let { catalogRubrics ->
-                catalogItems.update {
-                    catalogRubrics
-                }
-                viewed(catalogRubrics)
-            }
-        }
-        catalogItemsWithImage = catalogItems.map {
-            it.map {
-                Triple(
-                    it,
-                    Firebase.storage.getReferenceFromUrl(it.image).downloadUrl.await(),
-                    it.favoredBy.contains(myUserId)
-                )
-            }
+    val itemsFlow = MutableStateFlow<List<CatalogItem>>(emptyList())
+    val itemsWithImageFlow: Flow<List<Triple<CatalogItem, Uri, Boolean>>> = itemsFlow.map {
+        it.map {
+            Triple(
+                it,
+                Firebase.storage.getReferenceFromUrl(it.image).downloadUrl.await(),
+                it.favoredBy.contains(myUserId)
+            )
         }
     }
 
-    private fun viewed(catalogRubrics: List<CatalogItem>) {
-        catalogRubrics.filter { !it.viewedBy.contains(myUserId) }.forEach {
-            Firebase.firestore.document("catalog-item/${it.id}")
-                .update("viewedBy", FieldValue.arrayUnion(myUserId))
+    init {
+        Firebase.firestore.collection("catalog-item").addSnapshotListener { value, error ->
+            value?.map(QueryDocumentSnapshot::toCatalogItem)?.filter {
+                it.favoredBy.contains(myUserId)
+            }?.let { catalogRubrics ->
+                itemsFlow.update {
+                    catalogRubrics
+                }
+            }
         }
     }
 

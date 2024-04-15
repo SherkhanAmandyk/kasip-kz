@@ -6,6 +6,8 @@ class MainUiState {
             "My Works",
             "Hidden",
             "My Response",
+            "Favorite",
+            "Viewed",
             "Rialto",
         ),
         "General" to listOf(

@@ -1,14 +1,21 @@
 package kz.kasip
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import kz.kasip.catalog.catalogNavGraph
 import kz.kasip.chat.navigation.chatGraph
@@ -105,6 +112,25 @@ class RootActivity : ComponentActivity() {
                 }
                 NavHost(navController = navController, graph = navGraph)
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Firebase.messaging.token.addOnCompleteListener { task ->
+            viewModel.dataStoreRepository.getUserId()?.let {
+                Firebase.firestore.document("users/$it").update("fcmToken", task.result)
+            }
+        }
+        requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // FCM SDK (and your app) can post notifications.
+        } else {
         }
     }
 }

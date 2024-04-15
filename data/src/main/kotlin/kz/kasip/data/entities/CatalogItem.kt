@@ -8,4 +8,5 @@ data class CatalogItem(
     val price: String,
     val catalogRubricsId: String,
     val favoredBy: List<String>,
+    val viewedBy: List<String>,
 )

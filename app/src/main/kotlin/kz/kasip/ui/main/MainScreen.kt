@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.R
 import kz.kasip.catalog.catalogRubricsScreen
+import kz.kasip.catalog.favoriteScreen
+import kz.kasip.catalog.viewedScreen
 import kz.kasip.chat.navigation.blockListScreen
 import kz.kasip.chat.navigation.chatsScreen
 import kz.kasip.data.LogOutUseCase
@@ -67,6 +69,8 @@ fun MainScreen(
             "Profile" -> navigateTo(profileScreen)
             "Rialto" -> navigateTo(rialtoScreen)
             "Block list" -> navigateTo(blockListScreen)
+            "Favorite" -> navigateTo(favoriteScreen)
+            "Viewed" -> navigateTo(viewedScreen)
         }
     }
     val scrollState = rememberScrollState()

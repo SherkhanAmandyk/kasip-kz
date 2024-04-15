@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RootViewModel @Inject constructor(
-    dataStoreRepository: DataStoreRepository,
+    val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
     var start: String = if (dataStoreRepository.getUserId() == null) {
         onboarding

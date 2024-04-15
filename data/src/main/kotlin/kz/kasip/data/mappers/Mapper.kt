@@ -92,4 +92,5 @@ fun DocumentSnapshot.toCatalogItem() = CatalogItem(
     price = getString("price") ?: getString("price ") ?: "",
     catalogRubricsId = getString("catalog-rubrics-id") ?: "",
     favoredBy = (get("favoredBy") as List<String>?) ?: emptyList(),
+    viewedBy = (get("viewedBy") as List<String>?) ?: emptyList(),
 )
