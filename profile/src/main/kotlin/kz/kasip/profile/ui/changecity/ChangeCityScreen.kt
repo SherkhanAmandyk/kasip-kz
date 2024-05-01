@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.city
 
 @Composable
 fun ChangeCityScreen(
@@ -41,7 +43,7 @@ fun ChangeCityScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = "City")
+                    Text(text = lang[city] ?: "")
                     val city by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),

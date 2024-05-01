@@ -28,16 +28,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import kz.kasip.catalog.R
-import kz.kasip.catalog.favorite.FavoriteViewModel
 import kz.kasip.data.entities.CatalogItem
-import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.*
+import kz.kasip.designcore.Lang.lang
 
 @Composable
 fun ViewedScreen(
@@ -49,7 +48,7 @@ fun ViewedScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Viewed",
+                    title = lang[viewed]?:"",
                     onBack = onBack
                 )
             }

@@ -13,14 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.update
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
-import kz.kasip.settings.R
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.phone
 
 @Composable
 fun ChangePhoneScreen(
@@ -53,14 +53,19 @@ fun ChangePhoneScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = "Phone")
+                    Text(
+                        text = lang[phone] ?: ""
+                    )
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
                         Text(text = "Save phone")
                     }
                 }

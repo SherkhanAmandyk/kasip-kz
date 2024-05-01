@@ -24,12 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.*
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.rialto.R
 import kz.kasip.rialto.ui.main.salesperson.BuyerTab
@@ -53,7 +53,7 @@ fun MainRialtoScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.rialto),
+                    title = lang[rialto]?:"",
                     onBack = onBack
                 ) {
                     if (selectedTabIndex == 0) {
@@ -65,7 +65,7 @@ fun MainRialtoScreen(
                         }
                     } else {
                         TextButton(onClick = navigateToCreateProject) {
-                            Text(text = "Create", color = Color.Black)
+                            Text(text = lang[create] ?: "", color = Color.Black)
                         }
                     }
                 }
@@ -132,7 +132,7 @@ fun Tabs(selectedTabIndex: Int, onTabChange: (Int) -> Unit) {
             selected = true,
             onClick = { onTabChange(0) }) {
             Text(
-                text = stringResource(id = R.string.salesperson),
+                text = lang[i_am_a_salesperson]?:"",
                 fontWeight = FontWeight(700)
             )
         }
@@ -142,7 +142,7 @@ fun Tabs(selectedTabIndex: Int, onTabChange: (Int) -> Unit) {
             onClick = { onTabChange(1) }
         ) {
             Text(
-                text = stringResource(id = R.string.buyer),
+                text = lang[i_am_a_buyer]?:"",
                 fontWeight = FontWeight(700)
             )
         }

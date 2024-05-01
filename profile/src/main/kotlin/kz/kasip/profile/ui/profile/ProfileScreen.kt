@@ -19,15 +19,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.update
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.delete_account
+import kz.kasip.designcore.profile
 import kz.kasip.designcore.theme.Divider
 import kz.kasip.designcore.theme.RedBackground
-import kz.kasip.profile.R
 import kz.kasip.profile.navigation.changeBioScreen
 import kz.kasip.profile.navigation.changeCityScreen
 import kz.kasip.profile.navigation.changeCountryScreen
@@ -47,7 +48,7 @@ fun ProfileScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.profile),
+                    title = lang[profile] ?: "",
                     onBack = onBack
                 )
             }
@@ -119,7 +120,7 @@ fun ProfileScreen(
                                 .fillMaxWidth()
                                 .padding(14.dp),
                             fontSize = 22.sp,
-                            text = "Delete Account",
+                            text = lang[delete_account] ?: "",
                         )
                     }
                 }

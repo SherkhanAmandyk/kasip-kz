@@ -19,15 +19,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kz.kasip.R
 import kz.kasip.chat.ui.chat.Notification
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.notifications
 import java.util.Date
 
 @Composable
@@ -39,7 +39,7 @@ fun NotificationsScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(R.string.notifications),
+                    title = lang[notifications] ?: "",
                     onBack = onBack
                 )
             }

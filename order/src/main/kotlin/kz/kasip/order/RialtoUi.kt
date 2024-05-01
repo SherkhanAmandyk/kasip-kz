@@ -1,5 +1,6 @@
 package kz.kasip.order
 
+import android.net.Uri
 import androidx.compose.ui.text.toLowerCase
 import com.google.firebase.Timestamp
 import kz.kasip.data.entities.Profile
@@ -18,6 +19,7 @@ data class OrderUi(
     val price: String,
     val buyer: Profile?,
     val time: Timestamp,
+    val avatar: Uri?
 ) {
     fun contains(text: String): Boolean {
         return name.lowercase(Locale.getDefault()).contains(text) ||
@@ -34,7 +36,8 @@ data class OrderUi(
             description = "Translate text in English into Russian in a short period of time.",
             price = "15000Tg",
             buyer = Profile.empty,
-            time = Timestamp(Date())
+            time = Timestamp(Date()),
+            avatar = null
         )
     }
 }

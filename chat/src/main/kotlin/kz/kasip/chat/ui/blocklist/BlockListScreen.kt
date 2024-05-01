@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.chat.R
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.unblock
 
 @Composable
 fun BlockListScreen(
@@ -60,7 +62,7 @@ fun BlockListScreen(
                             TextButton(
                                 modifier = Modifier.align(Alignment.CenterVertically),
                                 onClick = { viewModel.unblock(it) }) {
-                                Text(text = "Unblock")
+                                Text(text = lang[unblock] ?: "")
                             }
                         }
                     }

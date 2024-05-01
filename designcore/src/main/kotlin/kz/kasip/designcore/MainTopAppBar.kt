@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 
 @Composable
@@ -75,12 +76,12 @@ fun MainTopAppBar(
                         if (avatar != null) {
                             Image(
                                 modifier = Modifier
-                                    .height(67.dp)
-                                    .width(67.dp)
+                                    .height(75.dp)
+                                    .width(75.dp)
                                     .border(1.dp, Color.Black, CircleShape),
                                 painter = rememberAsyncImagePainter(
                                     avatar,
-                                    contentScale = ContentScale.Crop
+                                    contentScale = ContentScale.FillBounds
                                 ),
                                 contentDescription = ""
                             )
@@ -108,7 +109,7 @@ fun PreviewMainTopAppBar() {
         Scaffold(
             topBar = {
                 Box(modifier = Modifier.fillMaxWidth()) {
-                    MainTopAppBar("Aslan Mergenov", "UI Designer", null) {}
+                    MainTopAppBar("Aslan Mergenov", lang[ui_designer]?:"" ?: "", null) {}
                 }
             }
         ) {

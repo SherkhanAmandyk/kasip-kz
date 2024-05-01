@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kz.kasip.data.entities.Rubric
 import kz.kasip.data.entities.Subrubric
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.CardBackground
+import java.util.Locale
 
 @Composable
 fun RubricsList(
@@ -44,7 +46,7 @@ fun RubricsList(
             ) {
                 Text(
                     modifier = Modifier.padding(start = 16.dp, top = 8.dp),
-                    text = rubric.name,
+                    text = lang[rubric.name.langTag()] ?: "",
                     fontSize = 24.sp
                 )
                 Spacer(modifier = Modifier.height(32.dp))
@@ -57,7 +59,7 @@ fun RubricsList(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.Bottom
                             ) {
-                                Text(text = subrubric.name, fontSize = 20.sp)
+                                Text(text = lang[subrubric.name.langTag()] ?: "", fontSize = 20.sp)
                                 Checkbox(
                                     checked = selectedSubrubricIds.contains(subrubric.id),
                                     onCheckedChange = { onSubrubricToggle(subrubric) }
@@ -75,6 +77,7 @@ fun RubricsList(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 
@@ -101,4 +104,8 @@ fun PreviewRialtoList() {
         ),
         listOf(""),
     ) {}
+}
+
+fun String.langTag(): String {
+    return lowercase(Locale.ROOT).replace(" ", "_")
 }

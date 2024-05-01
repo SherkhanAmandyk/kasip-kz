@@ -7,13 +7,13 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kz.kasip.data.entities.Rubric
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.mappers.toRubric
 import kz.kasip.data.repository.DataStoreRepository
@@ -55,6 +55,14 @@ suspend fun DocumentSnapshot.toRilatoUi(): RialtoUi {
         .await()
         .documents.first()
         .toProfile()
+    val avatar = runCatching {
+        Firebase.storage.getReferenceFromUrl("gs://kasip-kz.appspot.com/avatar/${getString("buyerUserId")}").downloadUrl.await()
+    }.onFailure {
+        println("ERROR::: ")
+        it.printStackTrace()
+    }.getOrNull().also {
+        println(it)
+    }
     return RialtoUi(
         id = getString("id") ?: "",
         rubric = rubric,
@@ -64,6 +72,7 @@ suspend fun DocumentSnapshot.toRilatoUi(): RialtoUi {
         description = getString("description") ?: "",
         price = getString("price") ?: "",
         buyer = buyer,
+        avatar = avatar,
         time = getTimestamp("time") ?: Timestamp(Date()),
     )
 }

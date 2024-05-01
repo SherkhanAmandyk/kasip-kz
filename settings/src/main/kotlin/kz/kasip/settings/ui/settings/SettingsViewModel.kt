@@ -1,14 +1,19 @@
 package kz.kasip.settings.ui.settings
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kz.kasip.data.LogOutUseCase
 import kz.kasip.data.mappers.toUser
 import kz.kasip.data.repository.DataStoreRepository
+import kz.kasip.designcore.Lang.eng
+import kz.kasip.designcore.Lang.kz
+import kz.kasip.designcore.Lang.lang
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,6 +21,7 @@ class SettingsViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
     private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
+    val appLangFlow = MutableStateFlow(lang)
     val settingsList = MutableStateFlow(
         listOf(
             Setting.Email(value = "mail@mail.com"),
@@ -41,6 +47,11 @@ class SettingsViewModel @Inject constructor(
                     }
                 }
             }
+        viewModelScope.launch {
+            appLangFlow.collect {
+                lang = it
+            }
+        }
     }
 
     fun deleteAccount() {
@@ -50,6 +61,14 @@ class SettingsViewModel @Inject constructor(
             .document(userId ?: "")
             .delete()
         isDeleted.update { true }
+    }
+
+    fun changeLang() {
+        if (lang == kz) {
+            appLangFlow.update { eng }
+        } else {
+            appLangFlow.update { kz }
+        }
     }
 }
 

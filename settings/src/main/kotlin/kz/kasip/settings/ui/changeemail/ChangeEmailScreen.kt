@@ -13,14 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.update
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
-import kz.kasip.settings.R
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_email
+import kz.kasip.designcore.email
+import kz.kasip.designcore.save_email
 
 @Composable
 fun ChangeEmailScreen(
@@ -38,7 +40,7 @@ fun ChangeEmailScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.change_email),
+                    title = lang[change_email] ?: "",
                     onBack = onBack
                 )
             }
@@ -53,15 +55,18 @@ fun ChangeEmailScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.email))
+                    Text(text = lang[email] ?: "")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = stringResource(id = R.string.save_email))
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(text = lang[save_email] ?: "")
                     }
                 }
             }

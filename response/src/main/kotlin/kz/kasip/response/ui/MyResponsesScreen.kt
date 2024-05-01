@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +30,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.entities.Rialto
 import kz.kasip.data.entities.RialtoOffer
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.created
+import kz.kasip.designcore.my_responses
+import kz.kasip.designcore.send
 import kz.kasip.designcore.theme.CB
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -45,7 +48,7 @@ fun MyResponsesScreen(
     Scaffold(
         topBar = {
             KasipTopAppBar(
-                title = stringResource(id = R.string.my_responses),
+                title = lang[my_responses] ?: "",
                 onBack = onBack
             )
         }
@@ -92,7 +95,7 @@ fun MyResponseItem(
                             )
                             .padding(vertical = 8.dp, horizontal = 28.dp)
                     ) {
-                        Text(text = "Send", color = Color.White)
+                        Text(text = lang[send] ?: "", color = Color.White)
                     }
                 }
                 Row {
@@ -125,7 +128,7 @@ fun MyResponseItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "created ${response.second.sentAt.toDate()}"
+                    text = "${lang[created]} ${response.second.sentAt.toDate()}"
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(28.dp)

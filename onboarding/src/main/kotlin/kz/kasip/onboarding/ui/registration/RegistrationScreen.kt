@@ -30,10 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.data.repository.UserRepository
-import kz.kasip.designcore.ButtonUiState
-import kz.kasip.designcore.EmailTextField
-import kz.kasip.designcore.KasipDialog
-import kz.kasip.designcore.PasswordTextField
+import kz.kasip.designcore.*
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.onboarding.R
 import kz.kasip.onboarding.usecase.RegistrationUseCase
@@ -124,7 +122,7 @@ fun RegistrationScreen(
                             )
                         }
                     ) {
-                        Text(text = stringResource(id = R.string.register))
+                        Text(text = lang[registration]?:"")
                     }
                 }
             }

@@ -90,13 +90,15 @@ class ChatViewModel @AssistedInject constructor(
         viewModelScope.launch {
             userFlow.collect {
                 it?.let { user ->
-                    profileFlow.update {
-                        Firebase.firestore.collection("profiles")
-                            .document(user.id)
-                            .get()
-                            .await()
-                            .toProfile()
-                    }
+                    Firebase.firestore.collection("profiles")
+                        .whereEqualTo("userId", user.id)
+                        .addSnapshotListener { value, error ->
+                            value?.documents?.firstOrNull()?.toProfile()?.let { profile ->
+                                profileFlow.update {
+                                    profile
+                                }
+                            }
+                        }
                 }
             }
         }

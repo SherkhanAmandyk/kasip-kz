@@ -2,6 +2,7 @@ package kz.kasip.rialto.ui.salesperson
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,12 +28,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.history
+import kz.kasip.designcore.offer
+import kz.kasip.designcore.search
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.Divider
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -58,7 +67,7 @@ fun SalespersonTab(
             value = searchText,
             onValueChange = viewModel::onSearchTextChange,
             label = {
-                Text(text = "Search")
+                Text(text = lang[search] ?: "")
             }
         )
 
@@ -96,13 +105,28 @@ fun SalespersonTab(
                     modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp)
                 ) {
                     Row {
-                        Image(
-                            modifier = Modifier
-                                .width(56.dp)
-                                .height(50.dp),
-                            painter = painterResource(id = kz.kasip.designcore.R.drawable.icon_profile_pic),
-                            contentDescription = ""
-                        )
+                        if (rialto.avatar != null) {
+                            Image(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(50.dp)
+                                    .clip(CircleShape)
+                                    .border(1.dp, Color.Black, CircleShape),
+                                painter = rememberAsyncImagePainter(
+                                    rialto.avatar,
+                                    contentScale = ContentScale.FillBounds
+                                ),
+                                contentDescription = ""
+                            )
+                        } else {
+                            Image(
+                                modifier = Modifier
+                                    .width(56.dp)
+                                    .height(50.dp),
+                                painter = painterResource(id = kz.kasip.designcore.R.drawable.icon_profile_pic),
+                                contentDescription = ""
+                            )
+                        }
                         Column(
                             modifier = Modifier.height(50.dp),
                         ) {
@@ -124,7 +148,7 @@ fun SalespersonTab(
                                 modifier = Modifier
                                     .weight(1F)
                                     .wrapContentSize(),
-                                text = stringResource(id = R.string.history),
+                                text = lang[history] ?: "",
                                 fontSize = 10.sp,
                             )
                         }
@@ -135,7 +159,7 @@ fun SalespersonTab(
                         colors = ButtonDefaults.buttonColors()
                             .copy(containerColor = PrimaryBackgroundGreen)
                     ) {
-                        Text(text = stringResource(id = R.string.offer))
+                        Text(text = lang[offer] ?: "")
                     }
                 }
             }

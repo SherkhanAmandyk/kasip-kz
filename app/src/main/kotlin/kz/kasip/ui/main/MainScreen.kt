@@ -26,7 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,8 +45,18 @@ import kz.kasip.chat.navigation.blockListScreen
 import kz.kasip.chat.navigation.chatsScreen
 import kz.kasip.data.LogOutUseCase
 import kz.kasip.data.repository.DataStoreRepository
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.MainTopAppBar
+import kz.kasip.designcore.hidden
+import kz.kasip.designcore.log_out
+import kz.kasip.designcore.my_response
+import kz.kasip.designcore.my_works
+import kz.kasip.designcore.notification
+import kz.kasip.designcore.profile
+import kz.kasip.designcore.rialto
+import kz.kasip.designcore.settings
 import kz.kasip.designcore.theme.DialogBackground
+import kz.kasip.designcore.viewed
 import kz.kasip.myResposesScreen
 import kz.kasip.notificationsScreen
 import kz.kasip.onboarding.navigation.onboarding
@@ -73,15 +82,15 @@ fun MainScreen(
 
     val onItemClick: (String) -> Unit = {
         when (it) {
-            "My Response" -> navigateTo(myResposesScreen)
-            "My Works" -> navigateTo(myWorksScreen)
-            "Hidden" -> navigateTo(hiddenWorksScreen)
-            "Settings" -> navigateTo(settingsScreen)
-            "Profile" -> navigateTo(profileScreen)
-            "Rialto" -> navigateTo(rialtoScreen)
+            lang[my_response] ?: "" -> navigateTo(myResposesScreen)
+            lang[my_works] -> navigateTo(myWorksScreen)
+            lang[hidden] ?: "" -> navigateTo(hiddenWorksScreen)
+            lang[settings] ?: "" -> navigateTo(settingsScreen)
+            lang[profile] ?: "" -> navigateTo(profileScreen)
+            lang[rialto] ?: "" -> navigateTo(rialtoScreen)
             "Block list" -> navigateTo(blockListScreen)
             "Favorite" -> navigateTo(favoriteScreen)
-            "Viewed" -> navigateTo(viewedScreen)
+            lang[viewed] ?: "" -> navigateTo(viewedScreen)
         }
     }
     val scrollState = rememberScrollState()
@@ -101,7 +110,7 @@ fun MainScreen(
                             modifier = Modifier
                                 .padding(vertical = 16.dp)
                                 .padding(start = 40.dp),
-                            text = "Log Out",
+                            text = lang[log_out] ?: "",
                             fontSize = 20.sp,
                             color = Color.Red
                         )
@@ -155,7 +164,7 @@ fun MainScreen(
                                     Icon(
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         painter = painterResource(id = R.drawable.icon_notification),
-                                        contentDescription = stringResource(id = R.string.notification)
+                                        contentDescription = lang[notification] ?: ""
                                     )
                                 }
                             )
@@ -235,7 +244,7 @@ fun MainScreen(
 
 @Composable
 fun Section(
-    section: Pair<String, List<String>>,
+    section: Pair<String, List<String?>>,
     textPadding: PaddingValues,
     onItemClick: (String) -> Unit,
 ) {
@@ -255,13 +264,13 @@ fun Section(
         Column(modifier = Modifier.fillMaxWidth()) {
             section.second.forEach {
                 Surface(
-                    onClick = { onItemClick(it) }
+                    onClick = { onItemClick(it ?: "") }
                 ) {
                     Text(
                         modifier = Modifier
                             .padding(textPadding)
                             .fillMaxWidth(),
-                        text = it,
+                        text = it ?: "",
                         fontSize = 21.sp
                     )
                 }

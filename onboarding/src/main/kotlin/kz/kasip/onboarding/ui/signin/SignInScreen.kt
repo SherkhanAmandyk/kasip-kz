@@ -18,14 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kz.kasip.designcore.EmailTextField
-import kz.kasip.designcore.PasswordTextField
+import kz.kasip.designcore.*
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
-import kz.kasip.onboarding.R
 
 @Composable
 fun SignInScreen(
@@ -46,12 +44,12 @@ fun SignInScreen(
                 navigateToMain()
                 viewModel.invalidateStates()
             }
-            Text(text = stringResource(id = R.string.email))
+            Text(text = lang[email]?:"")
             var email by remember { mutableStateOf(TextFieldValue("")) }
             EmailTextField(text = email) {
                 email = it
             }
-            Text(text = stringResource(id = R.string.password))
+            Text(text = lang[password]?:"")
             var password by remember { mutableStateOf(TextFieldValue("")) }
             PasswordTextField(text = password) {
                 password = it
@@ -64,7 +62,7 @@ fun SignInScreen(
                 },
                 colors = ButtonDefaults.buttonColors().copy(containerColor = PrimaryBackgroundGreen)
             ) {
-                Text(text = stringResource(id = R.string.sign_in))
+                Text(text = lang[sign_in]?:"")
             }
         }
     }

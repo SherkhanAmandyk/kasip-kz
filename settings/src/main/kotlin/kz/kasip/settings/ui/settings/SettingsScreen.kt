@@ -19,7 +19,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,14 +26,20 @@ import kotlinx.coroutines.flow.update
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.app_language
+import kz.kasip.designcore.delete_account
+import kz.kasip.designcore.english
+import kz.kasip.designcore.no
+import kz.kasip.designcore.settings
 import kz.kasip.designcore.theme.Divider
 import kz.kasip.designcore.theme.GB
 import kz.kasip.designcore.theme.RedBackground
-import kz.kasip.settings.R
+import kz.kasip.designcore.yes
 import kz.kasip.settings.navigation.changeEmailScreen
 import kz.kasip.settings.navigation.changeLoginScreen
 import kz.kasip.settings.navigation.changePasswordScreen
 import kz.kasip.settings.navigation.changePhoneScreen
+import java.util.Locale
 import kz.kasip.designcore.R as DesignR
 
 const val settingsScreen = "settingsScreen"
@@ -46,17 +51,18 @@ fun SettingsScreen(
     navigateTo: (String) -> Unit,
     onBack: () -> Unit,
 ) {
+    val appLang by viewModel.appLangFlow.collectAsState()
     val showDialog by viewModel.showDeleteDialog.collectAsState()
     if (showDialog) {
         KasipDialog(
             title = "Do you want to delete your account?",
             onDismissRequest = { viewModel.showDeleteDialog.update { false } },
             buttons = listOf(
-                ButtonUiState("Yes", color = GB),
-                ButtonUiState("No", color = GB)
+                ButtonUiState(appLang[yes] ?: "", color = GB),
+                ButtonUiState(appLang[no] ?: "", color = GB)
             )
         ) {
-            if (it.text == "Yes") {
+            if (it.text == appLang[yes] ?: "") {
                 viewModel.deleteAccount()
             }
         }
@@ -72,7 +78,7 @@ fun SettingsScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.settings),
+                    title = appLang[settings] ?: "",
                     onBack = onBack
                 )
             }
@@ -82,7 +88,6 @@ fun SettingsScreen(
                     val settings by viewModel.settingsList.collectAsState()
 
                     settings.forEach {
-
                         Surface(
                             onClick = {
                                 when (it) {
@@ -105,7 +110,8 @@ fun SettingsScreen(
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     Text(
-                                        text = it.name,
+                                        text = appLang[it.name.lowercase(Locale.ROOT)
+                                            .replace(" ", "_")] ?: it.name,
                                         fontSize = 22.sp
                                     )
                                     Row(
@@ -131,6 +137,50 @@ fun SettingsScreen(
                             }
                         }
                     }
+                    Surface(
+                        onClick = {
+                            viewModel.changeLang()
+                        }
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 24.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 14.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = appLang[app_language] ?: "",
+                                    fontSize = 22.sp
+                                )
+                                Row(
+                                    modifier = Modifier.widthIn(min = 150.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        text = appLang[english] ?: "",
+                                        fontSize = 17.sp
+                                    )
+                                    Icon(
+                                        painter = painterResource(id = DesignR.drawable.icon_forward),
+                                        contentDescription = ""
+                                    )
+                                }
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(1.dp)
+                                    .background(color = Divider),
+                            )
+                        }
+                    }
+
+
                     Spacer(modifier = Modifier.height(54.dp))
                     Surface(
                         color = RedBackground,
@@ -143,7 +193,7 @@ fun SettingsScreen(
                                 .fillMaxWidth()
                                 .padding(14.dp),
                             fontSize = 22.sp,
-                            text = "Delete Account",
+                            text = appLang[delete_account] ?: "",
                         )
                     }
                 }

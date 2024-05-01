@@ -43,6 +43,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kz.kasip.chat.R
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.delete_chat
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 
@@ -61,7 +63,7 @@ fun ChatScreen(
                 val user by viewModel.userFlow.collectAsState()
                 val profile by viewModel.profileFlow.collectAsState()
                 KasipTopAppBar(
-                    title = profile?.name ?: user?.email ?: "Chats",
+                    title = profile?.name?.takeIf(String::isNotEmpty) ?: user?.email ?: "Chats",
                     actions = {
                         val coroutineScope = rememberCoroutineScope()
                         val tooltipState = rememberTooltipState()
@@ -104,7 +106,7 @@ fun ChatScreen(
                                         }
                                         TextButton(onClick = { viewModel.deleteChat() }) {
                                             Text(
-                                                text = "Delete Chat",
+                                                text = lang[delete_chat] ?: "",
                                                 color = Color.Black
                                             )
                                         }
@@ -141,7 +143,7 @@ fun ChatScreen(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
                                     .fillMaxWidth(),
-                                text = "You blocked this chat",
+                                text = "You blocked this chat ",
                                 textAlign = TextAlign.Center
                             )
                         } else {

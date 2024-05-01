@@ -36,11 +36,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.repository.DataStoreRepository
+import kz.kasip.designcore.Lang
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.create_a_project_and_find_performers
+import kz.kasip.designcore.create_project
 import kz.kasip.designcore.theme.CB
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.designcore.theme.YB
 import kz.kasip.designcore.theme.YT
+import kz.kasip.designcore.you_have_no_active_projects
 import kz.kasip.rialto.R
 import kz.kasip.rialto.RialtoUi
 import java.util.Date
@@ -64,13 +69,13 @@ fun BuyerTab(
             ) {
                 Text(
                     modifier = Modifier.padding(horizontal = 100.dp),
-                    text = "You have no active projects",
+                    text = Lang.lang[you_have_no_active_projects] ?: "",
                     fontSize = 21.sp,
                     fontWeight = FontWeight(700),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "Create a project and find performers",
+                    text = lang[create_a_project_and_find_performers] ?: "",
                     textAlign = TextAlign.Center
                 )
                 Button(
@@ -81,7 +86,7 @@ fun BuyerTab(
                     colors = ButtonDefaults.buttonColors()
                         .copy(containerColor = PrimaryBackgroundGreen)
                 ) {
-                    Text(text = "Create project")
+                    Text(text = lang[create_project]?:"")
                 }
             }
         }

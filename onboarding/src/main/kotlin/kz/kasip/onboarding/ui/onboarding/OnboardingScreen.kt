@@ -23,10 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.join_kasip_kz
+import kz.kasip.designcore.join_the_reliable_kasip_kz_platform_and_solve_any_problem_online_with_thousands_of_freelance_services
+import kz.kasip.designcore.registration_with_email
+import kz.kasip.designcore.sign_in
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.onboarding.R
 import kz.kasip.onboarding.navigation.login
@@ -55,13 +59,14 @@ fun OnboardingScreen(navigateTo: (String) -> Unit) {
                 ) {
 
                     Text(
-                        text = "Join Kasip.kz",
+                        text = lang[join_kasip_kz] ?: "",
                         color = Color.White,
                         fontSize = 24.sp
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Join the reliable Kasip.kz platform and solve any problem online with thousands of freelance services",
+                        text = lang[join_the_reliable_kasip_kz_platform_and_solve_any_problem_online_with_thousands_of_freelance_services]
+                            ?: "",
                         color = Color.White,
                         fontSize = 21.sp
                     )
@@ -89,13 +94,13 @@ fun OnboardingScreen(navigateTo: (String) -> Unit) {
                                     .copy(containerColor = PrimaryBackgroundGreen)
                             ) {
                                 Text(
-                                    text = stringResource(R.string.register_with_email),
+                                    text = lang[registration_with_email] ?: "",
                                     color = Color.Black
                                 )
                             }
                             TextButton(onClick = { navigateTo(login) }) {
                                 Text(
-                                    text = stringResource(R.string.sign_in),
+                                    text = lang[sign_in] ?: "",
                                     fontSize = 20.sp,
                                     color = Color.Black
                                 )

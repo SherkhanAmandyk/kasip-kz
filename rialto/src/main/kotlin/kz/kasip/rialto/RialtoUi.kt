@@ -1,5 +1,6 @@
 package kz.kasip.rialto
 
+import android.net.Uri
 import androidx.compose.ui.text.toLowerCase
 import com.google.firebase.Timestamp
 import kz.kasip.data.entities.Profile
@@ -18,6 +19,7 @@ data class RialtoUi(
     val price: String,
     val buyer: Profile?,
     val time: Timestamp,
+    val avatar: Uri?
 ) {
     fun contains(text: String): Boolean {
         return name.lowercase(Locale.getDefault()).contains(text) ||
@@ -34,6 +36,7 @@ data class RialtoUi(
             description = "Translate text in English into Russian in a short period of time.",
             price = "15000Tg",
             buyer = Profile.empty,
+            avatar = null,
             time = Timestamp(Date())
         )
     }

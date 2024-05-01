@@ -1,18 +1,29 @@
 package kz.kasip.ui.main
 
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.general
+import kz.kasip.designcore.hidden
+import kz.kasip.designcore.my_response
+import kz.kasip.designcore.my_works
+import kz.kasip.designcore.profile
+import kz.kasip.designcore.rialto
+import kz.kasip.designcore.settings
+import kz.kasip.designcore.viewed
+import kz.kasip.designcore.work
+
 class MainUiState {
     val sections = listOf(
-        "Work" to listOf(
-            "My Works",
-            "Hidden",
-            "My Response",
+        (lang[work] ?: "") to listOf(
+            (lang[my_works]),
+            lang[hidden] ?: "",
+            lang[my_response] ?: "",
             "Favorite",
-            "Viewed",
-            "Rialto",
+            lang[viewed] ?: "",
+            lang[rialto] ?: "",
         ),
-        "General" to listOf(
-            "Settings",
-            "Profile",
+        (lang[general] ?: "") to listOf(
+            lang[settings] ?: "",
+            lang[profile] ?: "",
             "Block list"
         )
     )

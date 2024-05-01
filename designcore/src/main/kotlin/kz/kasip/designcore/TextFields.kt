@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import kz.kasip.designcore.Lang.lang
 
 @Composable
 fun EmailTextField(
@@ -32,7 +33,7 @@ fun EmailTextField(
         onValueChange = onTextChange,
         singleLine = true,
         placeholder = {
-            Text(text = "Email")
+            Text(text = lang[email] ?: "")
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
@@ -52,8 +53,8 @@ fun PasswordTextField(
         onValueChange = onTextChange,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        label = { Text(text = stringResource(id = R.string.password)) },
-        placeholder = { Text(text = stringResource(id = R.string.password)) },
+        label = { Text(text = lang[password] ?: "") },
+        placeholder = { Text(text = lang[password] ?: "") },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             val image = if (passwordVisible)

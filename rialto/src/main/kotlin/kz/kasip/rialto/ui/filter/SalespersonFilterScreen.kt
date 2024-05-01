@@ -15,9 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.RubricsList
+import kz.kasip.designcore.save
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.rialto.ui.salesperson.SalespersonViewModel
+import java.util.Locale
 
 @Composable
 fun SalespersonFilterScreen(
@@ -31,7 +34,7 @@ fun SalespersonFilterScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Rubrics",
+                    title = lang[kz.kasip.designcore.rubrics] ?: "",
                     onBack = onBack
                 )
             },
@@ -44,7 +47,7 @@ fun SalespersonFilterScreen(
                     colors = ButtonDefaults.buttonColors()
                         .copy(containerColor = PrimaryBackgroundGreen)
                 ) {
-                    Text(text = "Save")
+                    Text(text = lang[save] ?: "")
                 }
             },
             floatingActionButtonPosition = FabPosition.Center
@@ -61,6 +64,6 @@ fun SalespersonFilterScreen(
             }
         }
     }
-
 }
+
 

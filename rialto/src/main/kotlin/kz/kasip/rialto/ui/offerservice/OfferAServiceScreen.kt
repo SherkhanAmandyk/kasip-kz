@@ -38,8 +38,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.cost
+import kz.kasip.designcore.detail_description_of_project
+import kz.kasip.designcore.history
+import kz.kasip.designcore.offer
+import kz.kasip.designcore.offer_a_service
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
+import kz.kasip.designcore.to
+import kz.kasip.designcore.write_how_you_will_solve_the_client_s_problem
 import kz.kasip.rialto.R
 import kz.kasip.rialto.RialtoUi
 
@@ -61,7 +69,7 @@ fun OfferAServiceScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.offer_a_service),
+                    title = lang[offer_a_service] ?: "",
                     color = Color.White,
                     onBack = onBack
                 )
@@ -100,7 +108,7 @@ fun OfferAServiceScreen(
                         ) {
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = stringResource(id = R.string.description_of_project),
+                                text = lang[detail_description_of_project] ?: "",
                                 fontSize = 16.sp
                             )
                             Card(
@@ -131,7 +139,7 @@ fun OfferAServiceScreen(
                                     text = "Desired budget: ",
                                     fontSize = 16.sp
                                 )
-                                Text(text = "to ")
+                                Text(text = lang[to] ?: "")
                                 Text(
                                     text = rialto.price,
                                     color = PrimaryBackgroundGreen,
@@ -170,7 +178,7 @@ fun OfferAServiceScreen(
                                         modifier = Modifier
                                             .weight(1F)
                                             .wrapContentSize(),
-                                        text = stringResource(id = R.string.history),
+                                        text = lang[history] ?: "",
                                         fontSize = 10.sp,
                                     )
                                 }
@@ -191,7 +199,8 @@ fun OfferAServiceScreen(
                                     onValueChange = viewModel::onOfferTextChange,
                                     label = {
                                         Text(
-                                            text = "Write how you will solve the client’s problem",
+                                            text = lang[write_how_you_will_solve_the_client_s_problem]
+                                                ?: "",
                                             fontSize = 10.sp
                                         )
                                     },
@@ -200,7 +209,7 @@ fun OfferAServiceScreen(
                             }
                             val price by viewModel.priceFlow.collectAsState()
                             Text(
-                                text = "Cost",
+                                text = lang[cost] ?: "",
                                 fontSize = 16.sp
                             )
                             TextField(
@@ -219,7 +228,7 @@ fun OfferAServiceScreen(
                                 colors = ButtonDefaults.buttonColors()
                                     .copy(containerColor = PrimaryBackgroundGreen)
                             ) {
-                                Text(text = "Offer")
+                                Text(text = lang[offer] ?: "")
                             }
                         }
                     }

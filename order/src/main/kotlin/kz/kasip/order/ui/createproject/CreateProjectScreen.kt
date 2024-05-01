@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,15 +35,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.RubricsList
+import kz.kasip.designcore.add_the_cost
+import kz.kasip.designcore.cost
+import kz.kasip.designcore.create_project
+import kz.kasip.designcore.detail_description_of_project
+import kz.kasip.designcore.project_name
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
-import kz.kasip.designcore.theme.PurpleGrey40
+import kz.kasip.designcore.write_the_name
+import kz.kasip.designcore.write_the_namedescribe_your_project_requirements_deadlines_and_criteria_in_detail
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -97,7 +102,7 @@ fun CreateProjectScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Create project",
+                    title = lang[create_project]?:"",
                     color = Color.White,
                     onBack = onBack
                 )
@@ -115,7 +120,7 @@ fun CreateProjectScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Project name",
+                            text = lang[project_name] ?: "",
                             fontSize = 16.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -132,14 +137,14 @@ fun CreateProjectScreen(
                                 value = offerText,
                                 onValueChange = viewModel::onProjectNameChange,
                                 label = {
-                                    Text(text = "Write the name")
+                                    Text(text = lang[write_the_name] ?: "")
                                 }
                             )
                         }
                     }
                     Column {
                         Text(
-                            text = "Detail description of project",
+                            text = lang[detail_description_of_project] ?: "",
                             fontSize = 16.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -157,8 +162,10 @@ fun CreateProjectScreen(
                                 onValueChange = viewModel::onProjectDescriptionChange,
                                 label = {
                                     Text(
-                                        text = "Write the nameDescribe your project requirements, deadlines and criteria in detail",
-                                        fontSize = 12.sp
+                                        text = lang[write_the_namedescribe_your_project_requirements_deadlines_and_criteria_in_detail]
+                                            ?: "",
+                                        fontSize =
+                                        12.sp
                                     )
                                 },
                                 textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
@@ -167,7 +174,7 @@ fun CreateProjectScreen(
                     }
                     Column {
                         Text(
-                            text = "Rubric",
+                            text = lang[kz.kasip.designcore.rubrics] ?: "",
                             fontSize = 16.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -187,7 +194,7 @@ fun CreateProjectScreen(
                     }
                     Column {
                         Text(
-                            text = "Cost",
+                            text = lang[cost] ?: "",
                             fontSize = 16.sp
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -204,7 +211,7 @@ fun CreateProjectScreen(
                                 value = offerText,
                                 onValueChange = viewModel::onPriceChange,
                                 label = {
-                                    Text(text = "Add the cost")
+                                    Text(text = lang[add_the_cost] ?: "")
                                 },
                                 keyboardOptions = KeyboardOptions.Default.copy(
                                     keyboardType = KeyboardType.Decimal
@@ -218,7 +225,7 @@ fun CreateProjectScreen(
                         colors = ButtonDefaults.buttonColors()
                             .copy(containerColor = PrimaryBackgroundGreen)
                     ) {
-                        Text(text = "Create project")
+                        Text(text = lang[create_project] ?: "")
                     }
                 }
             }

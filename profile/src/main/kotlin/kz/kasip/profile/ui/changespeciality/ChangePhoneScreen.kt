@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.update
 import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.speciality
 
 @Composable
 fun ChangeSpecialityScreen(
@@ -51,7 +53,7 @@ fun ChangeSpecialityScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = "Speciality")
+                    Text(text = lang[speciality]?:"")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
