@@ -1,9 +1,11 @@
 package kz.kasip.chat.ui.chats
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +37,15 @@ class ChatsViewModel @Inject constructor(
         users.map {
             ChatToOpen(
                 it,
-                profiles[it.id]
+                profiles[it.id],
+                runCatching {
+                    Firebase.storage.getReferenceFromUrl("gs://kasip-kz.appspot.com/avatar/${it.id}").downloadUrl.await()
+                }.onFailure {
+                    println("ERROR::: ")
+                    it.printStackTrace()
+                }.getOrNull().also {
+                    println(it)
+                }
             )
         }
     }
@@ -111,4 +121,6 @@ class ChatsViewModel @Inject constructor(
 data class ChatToOpen(
     val user: User,
     val profile: Profile?,
-)
+    val avatar: Uri?
+) {
+}

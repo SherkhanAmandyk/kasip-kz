@@ -46,6 +46,7 @@ class RegistrationUseCase @Inject constructor(
                         login = "",
                         phone = "",
                         password = password,
+                        fcmToken = "",
                         null
                     )
                 )

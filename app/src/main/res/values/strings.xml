@@ -5,4 +5,6 @@
     <string name="calendar">Calendar</string>
     <string name="works">Works</string>
     <string name="notification">Notifications</string>
+    <string name="notifications">Notifications</string>
+    <string name="photo">Photo</string>
 </resources>

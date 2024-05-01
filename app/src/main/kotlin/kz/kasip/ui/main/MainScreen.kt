@@ -10,16 +10,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -41,6 +49,7 @@ import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.MainTopAppBar
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.myResposesScreen
+import kz.kasip.notificationsScreen
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.order.navigation.orderScreen
 import kz.kasip.profile.ui.profile.profileScreen
@@ -49,10 +58,12 @@ import kz.kasip.settings.ui.settings.settingsScreen
 import kz.kasip.works.navigation.hiddenWorksScreen
 import kz.kasip.works.navigation.myWorksScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     viewModel: MainViewModel = hiltViewModel(),
     navigateTo: (String) -> Unit,
+    onSelectPhoto: () -> Unit,
 ) {
     val isLoggedOut by viewModel.isLoggedOut.collectAsState()
     if (isLoggedOut) {
@@ -74,6 +85,8 @@ fun MainScreen(
         }
     }
     val scrollState = rememberScrollState()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
 
     Surface {
         Scaffold(
@@ -137,7 +150,7 @@ fun MainScreen(
                             )
                             IconButton(
                                 modifier = Modifier.weight(1F),
-                                onClick = {},
+                                onClick = { navigateTo(notificationsScreen) },
                                 content = {
                                     Icon(
                                         modifier = Modifier.padding(bottom = 8.dp),
@@ -179,9 +192,14 @@ fun MainScreen(
                 ) {
                     val user by viewModel.userFlow.collectAsState()
                     val profile by viewModel.profileFlow.collectAsState()
+                    val avatar by viewModel.avatarFlow.collectAsState()
                     MainTopAppBar(
-                        name = profile?.name ?: user?.email ?: ""
-                    )
+                        name = profile?.name ?: user?.email ?: "",
+                        profession = profile?.speciality ?: "",
+                        avatar = avatar
+                    ) {
+                        showBottomSheet = true
+                    }
                     val textPadding = PaddingValues(top = 24.dp, start = 40.dp, bottom = 12.dp)
                     uiState.sections.forEach {
                         Section(
@@ -191,6 +209,25 @@ fun MainScreen(
                         )
                     }
                 }
+            }
+        }
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
+                tonalElevation = 0.dp,
+                scrimColor = Color.Transparent,
+                shape = RoundedCornerShape(0.dp)
+            ) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        onSelectPhoto()
+                        showBottomSheet = false
+                    }
+                ) {
+                    Text(text = stringResource(id = R.string.photo))
+                }
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }
@@ -247,6 +284,7 @@ fun PreviewMainScreen() {
                 )
             ),
             DataStoreRepository(LocalContext.current.getSharedPreferences("", MODE_PRIVATE))
-        )
+        ),
+        {}
     ) {}
 }

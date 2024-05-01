@@ -1,6 +1,5 @@
 package kz.kasip.data.entities
 
-import com.google.firebase.Timestamp
 import java.util.Date
 
 data class Message(

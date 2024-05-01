@@ -30,4 +30,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestorm)
     implementation(libs.firebase.storage)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 }

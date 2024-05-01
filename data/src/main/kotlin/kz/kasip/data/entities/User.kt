@@ -8,5 +8,6 @@ class User(
     val login: String,
     val phone: String,
     val password: String,
+    val fcmToken: String,
     val deletedAt: Timestamp?,
 )

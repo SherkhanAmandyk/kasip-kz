@@ -91,6 +91,7 @@ dependencies {
     implementation(libs.firebase.firestorm)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.messaging)
+    implementation (libs.retrofit)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

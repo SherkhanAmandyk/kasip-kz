@@ -15,6 +15,7 @@ fun DocumentSnapshot.toUser() = User(
     login = getString("login") ?: "Undefined",
     phone = getString("phone") ?: "Undefined",
     password = getString("password") ?: "",
+    fcmToken = getString("fcmToken") ?: "",
     deletedAt = getTimestamp("deletedAt")
 )
 

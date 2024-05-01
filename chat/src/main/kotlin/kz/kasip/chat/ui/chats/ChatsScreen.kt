@@ -48,6 +48,7 @@ fun ChatsScreen(
                     chats.forEach {
                         Box(modifier = Modifier.padding(vertical = 16.dp)) {
                             ChatItem(
+                                avatar = it.avatar,
                                 name = it.profile?.name?.takeIf { it.isNotEmpty() } ?: it.user.email
                             ) {
                                 viewModel.createOrGetChat(it.user.id)

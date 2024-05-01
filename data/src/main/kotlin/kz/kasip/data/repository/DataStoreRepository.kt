@@ -28,4 +28,10 @@ class DataStoreRepository(private val sharedPreferences: SharedPreferences) {
     fun clear() {
         return sharedPreferences.edit().clear().apply()
     }
+
+    fun isNotified(id: String): Boolean {
+        return sharedPreferences.getBoolean(id, false).also {
+            sharedPreferences.edit().putBoolean(id, true).apply()
+        }
+    }
 }

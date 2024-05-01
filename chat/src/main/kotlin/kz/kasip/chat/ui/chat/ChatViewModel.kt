@@ -7,9 +7,6 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.Constants.MessageNotificationKeys
-import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.ktx.messaging
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +15,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kz.kasip.data.FCM
+import kz.kasip.data.Push
+import kz.kasip.data.PushData
 import kz.kasip.data.entities.Chat
 import kz.kasip.data.entities.Message
 import kz.kasip.data.entities.Profile
@@ -33,6 +33,7 @@ import java.util.Date
 class ChatViewModel @AssistedInject constructor(
     @Assisted val charId: String,
     val dataStoreRepository: DataStoreRepository,
+    private val fcm: FCM,
 ) : ViewModel() {
     val messagesDoc = "chats/$charId/messages"
 
@@ -46,6 +47,7 @@ class ChatViewModel @AssistedInject constructor(
     val messagesFlow = MutableStateFlow<List<Pair<Boolean, Message>>>(emptyList())
     val messagesFinalFlow = combine(chatFlow, messagesFlow) { chat, messages ->
         messages.filter { chat == null || it.second.sentAt.after(chat.deletedTill) }
+            .sortedBy { it.second.sentAt }
     }
 
     init {
@@ -69,23 +71,23 @@ class ChatViewModel @AssistedInject constructor(
             }
 
         viewModelScope.launch {
-            chatFlow.collect { chat ->
-                chat?.let { chat ->
-                    userFlow.update {
-                        Firebase.firestore.collection("users")
-                            .document(chat.participantUserIds.first { it != myUserId })
-                            .get()
-                            .await()
-                            .toUser()
-                    }
+            chatFlow.collect { chatNullable ->
+                chatNullable?.let { chat ->
+                    Firebase.firestore.collection("users")
+                        .document(chat.participantUserIds.first { it != myUserId })
+                        .addSnapshotListener { value, _ ->
+                            value?.toUser()?.let { user -> userFlow.update { user } }
+                        }
                     amIBlocked.update {
-                        chat.blockedBy.filter { it != dataStoreRepository.getUserId() }.isNotEmpty()
+                        chat.blockedBy.any { it != dataStoreRepository.getUserId() }
                     }
                     didIBlock.update {
                         chat.blockedBy.contains(dataStoreRepository.getUserId())
                     }
                 }
             }
+        }
+        viewModelScope.launch {
             userFlow.collect {
                 it?.let { user ->
                     profileFlow.update {
@@ -101,32 +103,41 @@ class ChatViewModel @AssistedInject constructor(
     }
 
     fun send() {
-//        params.getString(MessageNotificationKeys.TITLE);
-//        params.getString(MessageNotificationKeys.BODY);
-//        params.getString(MessageNotificationKeys.ICON);
-//        params.getString(MessageNotificationKeys.TAG);
-//        params.getString(MessageNotificationKeys.COLOR);
-//        params.getString(MessageNotificationKeys.CLICK_ACTION);
-//        params.getString(MessageNotificationKeys.CHANNEL);
-//        params.getString(MessageNotificationKeys.IMAGE_URL);
-//        params.getString(MessageNotificationKeys.TICKER);
-//        MessageNotificationKeys.ENABLE_NOTIFICATION
         viewModelScope.launch {
             Firebase.firestore.collection(messagesDoc)
                 .add(Message(dataStoreRepository.getUserId() ?: "", messageFlow.value.text, Date()))
+                .await()
+            sendFCM(to = userFlow.value, message = messageFlow.value.text, chatId = charId)
             messageFlow.update { TextFieldValue("") }
         }
-//        Firebase.messaging.send(
-//            RemoteMessage.Builder("386790377148@fcm.googleapis.com")
-//                .setData(
-//                    mapOf(
-//                        MessageNotificationKeys.TITLE to "",
-//                        MessageNotificationKeys.BODY to "",
-//                        MessageNotificationKeys.ENABLE_NOTIFICATION to "1"
-//                    )
-//                )
-//                .build()
-//        )
+    }
+
+
+    private fun sendFCM(to: User?, message: String, chatId: String?) {
+        viewModelScope.launch {
+            runCatching {
+                fcm.sendPush(
+                    push = Push(
+                        to = "edcovFInS1-lXGMslti1sQ:APA91bH48KjN--onXSfXcpzDu79rYdw7tYcUuvQE0aM3wqw-LqhO8M6obVwIi3ZJAMvgXFB7SMffwEo6IIso9-kn3wVBV5Y7-hNfncvkjRaVP566C7jO4WAegV22k3JUdvgQxFFxT9Rc",
+                        data = PushData(
+                            body = message,
+                            title = "Message",
+                            chatId = chatId
+                        )
+                    )
+                )
+                Firebase.firestore.collection("notifications")
+                    .add(
+                        Notification(
+                            title = "Message from user",
+                            body = message,
+                            chatId = chatId,
+                            userId = to?.id,
+                            sentAt = Date()
+                        )
+                    )
+            }
+        }
     }
 
     fun toggleBlock(didIBlock: Boolean) {
