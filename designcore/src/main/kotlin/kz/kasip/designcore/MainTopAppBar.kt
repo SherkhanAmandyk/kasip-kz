@@ -109,7 +109,7 @@ fun PreviewMainTopAppBar() {
         Scaffold(
             topBar = {
                 Box(modifier = Modifier.fillMaxWidth()) {
-                    MainTopAppBar("Aslan Mergenov", lang[ui_designer]?:"" ?: "", null) {}
+                    MainTopAppBar("Aslan Mergenov", lang[ui_designer] ?: "", null) {}
                 }
             }
         ) {

@@ -20,7 +20,9 @@ import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.ok
 import kz.kasip.designcore.phone
+import kz.kasip.designcore.save_phone
 
 @Composable
 fun ChangePhoneScreen(
@@ -31,7 +33,7 @@ fun ChangePhoneScreen(
     if (isPhoneInvalid) {
         KasipDialog(
             onDismissRequest = { viewModel.isPhoneInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
+            buttons = listOf(ButtonUiState(lang[ok] ?: ""))
         )
     }
     Surface {
@@ -66,7 +68,7 @@ fun ChangePhoneScreen(
                         viewModel.onSave()
                         onBack()
                     }) {
-                        Text(text = "Save phone")
+                        Text(lang[save_phone] ?: "")
                     }
                 }
             }

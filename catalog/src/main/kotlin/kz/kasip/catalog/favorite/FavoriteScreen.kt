@@ -36,6 +36,8 @@ import coil.compose.rememberAsyncImagePainter
 import kz.kasip.catalog.R
 import kz.kasip.data.entities.CatalogItem
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.favorite
 
 @Composable
 fun FavoriteScreen(
@@ -47,7 +49,7 @@ fun FavoriteScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Favorite",
+                    title = lang[favorite]?:"",
                     onBack = onBack
                 )
             }

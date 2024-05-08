@@ -38,8 +38,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.Lang
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.active
 import kz.kasip.designcore.create_a_project_and_find_performers
 import kz.kasip.designcore.create_project
+import kz.kasip.designcore.created
 import kz.kasip.designcore.theme.CB
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -125,7 +127,7 @@ fun MyRialtoItem(rialtoUi: RialtoUi) {
                             )
                             .padding(vertical = 8.dp, horizontal = 28.dp)
                     ) {
-                        Text(text = "Active", color = Color.White)
+                        Text(lang[active] ?: "", color = Color.White)
                     }
                 }
                 Row(
@@ -178,7 +180,7 @@ fun MyRialtoItem(rialtoUi: RialtoUi) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "created ${rialtoUi.time.toDate().toDate()}"
+                    text = "${lang[created]} ${rialtoUi.time.toDate().toDate()}"
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(28.dp)

@@ -44,7 +44,7 @@ class RootViewModel @Inject constructor(
 
     fun savePhoto(uri: Uri) {
         val riversRef =
-            Firebase.storage.reference.child("avatar/${dataStoreRepository.getUserId()}")
+            Firebase.storage.getReferenceFromUrl("gs://kasip-kz.appspot.com/avatar/${dataStoreRepository.getUserId()}")
         val uploadTask = riversRef.putFile(uri)
 
         uploadTask.addOnFailureListener {

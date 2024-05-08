@@ -27,6 +27,8 @@ import kz.kasip.data.mappers.toMessage
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.mappers.toUser
 import kz.kasip.data.repository.DataStoreRepository
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.message_from_user
 import java.util.Date
 
 @HiltViewModel(assistedFactory = ChatViewModelFactory::class)
@@ -131,7 +133,7 @@ class ChatViewModel @AssistedInject constructor(
                 Firebase.firestore.collection("notifications")
                     .add(
                         Notification(
-                            title = "Message from user",
+                            title = lang[message_from_user] ?: "",
                             body = message,
                             chatId = chatId,
                             userId = to?.id,

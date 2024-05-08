@@ -40,6 +40,8 @@ import coil.compose.rememberAsyncImagePainter
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.history
 import kz.kasip.designcore.offer
+import kz.kasip.designcore.rate
+import kz.kasip.designcore.search
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.Divider
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -66,7 +68,7 @@ fun SalespersonTab(
             value = searchText,
             onValueChange = viewModel::onSearchTextChange,
             label = {
-                Text(text = "Search")
+                Text(text = lang[search] ?: "")
             }
         )
 
@@ -140,14 +142,14 @@ fun SalespersonTab(
                                 modifier = Modifier
                                     .weight(1F)
                                     .wrapContentSize(),
-                                text = stringResource(id = R.string.rate, order.buyer?.rate ?: ""),
+                                text ="${lang[rate]} ${order.buyer?.rate}",
                                 fontSize = 10.sp,
                             )
                             Text(
                                 modifier = Modifier
                                     .weight(1F)
                                     .wrapContentSize(),
-                                text = lang[history]?:"",
+                                text = lang[history] ?: "",
                                 fontSize = 10.sp,
                             )
                         }
@@ -158,7 +160,7 @@ fun SalespersonTab(
                         colors = ButtonDefaults.buttonColors()
                             .copy(containerColor = PrimaryBackgroundGreen)
                     ) {
-                        Text(text = lang[offer]?:"")
+                        Text(text = lang[offer] ?: "")
                     }
                 }
             }

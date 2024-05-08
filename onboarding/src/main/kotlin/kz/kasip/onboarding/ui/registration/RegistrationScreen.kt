@@ -43,32 +43,32 @@ fun RegistrationScreen(
 ) {
     if (viewModel.isEmailAlreadyExistsFlow.collectAsState().value) {
         KasipDialog(
-            title = stringResource(id = R.string.email_is_used),
-            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            title = lang[email_is_used] ?: "",
+            buttons = listOf(ButtonUiState(text = lang[ok] ?: "")),
             onDismissRequest = { viewModel.invalidateStates() }) {
             viewModel.invalidateStates()
         }
     }
     if (viewModel.isPasswordNotSameFlow.collectAsState().value) {
         KasipDialog(
-            title = stringResource(id = R.string.password_doesnt_match),
-            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            title = lang[password_doesnt_match] ?: "",
+            buttons = listOf(ButtonUiState(text = lang[ok] ?: "")),
             onDismissRequest = { viewModel.invalidateStates() }) {
             viewModel.invalidateStates()
         }
     }
     if (viewModel.isEmailAlreadyExistsFlow.collectAsState().value) {
         KasipDialog(
-            title = stringResource(id = R.string.email_is_used),
-            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            title = lang[email_is_used] ?: "",
+            buttons = listOf(ButtonUiState(text = lang[ok] ?: "")),
             onDismissRequest = { viewModel.invalidateStates() }) {
             viewModel.invalidateStates()
         }
     }
     if (viewModel.isEmailInvalidFlow.collectAsState().value) {
         KasipDialog(
-            title = stringResource(id = R.string.email_invalid),
-            buttons = listOf(ButtonUiState(text = stringResource(id = R.string.ok))),
+            title = lang[email_invalid] ?: "",
+            buttons = listOf(ButtonUiState(text = lang[ok] ?: "")),
             onDismissRequest = { viewModel.invalidateStates() }) {
             viewModel.invalidateStates()
         }

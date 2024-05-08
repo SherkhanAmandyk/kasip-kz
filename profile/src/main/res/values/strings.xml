@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile">Profile</string>
-    <string name="change_name">Change name</string>
-    <string name="name">Name</string>
-    <string name="save_name">Save Name</string>
 </resources>

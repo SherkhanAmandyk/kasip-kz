@@ -22,6 +22,7 @@ import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.change_email
 import kz.kasip.designcore.email
+import kz.kasip.designcore.ok
 import kz.kasip.designcore.save_email
 
 @Composable
@@ -33,7 +34,7 @@ fun ChangeEmailScreen(
     if (isEmailInvalid) {
         KasipDialog(
             onDismissRequest = { viewModel.isEmailInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
+            buttons = listOf(ButtonUiState(lang[ok] ?: ""))
         )
     }
     Surface {

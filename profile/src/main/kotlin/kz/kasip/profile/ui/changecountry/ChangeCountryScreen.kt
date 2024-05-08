@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.country
+import kz.kasip.designcore.save_country
 
 @Composable
 fun ChangeCountryScreen(
@@ -43,15 +44,18 @@ fun ChangeCountryScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = lang[country]?:"")
+                    Text(text = lang[country] ?: "")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = "Save Bio")
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(lang[save_country] ?: "")
                     }
                 }
             }

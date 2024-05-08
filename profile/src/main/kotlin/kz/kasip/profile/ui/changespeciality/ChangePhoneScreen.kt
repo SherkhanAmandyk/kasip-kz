@@ -20,6 +20,8 @@ import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.ok
+import kz.kasip.designcore.save_speciality
 import kz.kasip.designcore.speciality
 
 @Composable
@@ -31,7 +33,7 @@ fun ChangeSpecialityScreen(
     if (isSpecialityInvalid) {
         KasipDialog(
             onDismissRequest = { viewModel.isSpecialityInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
+            buttons = listOf(ButtonUiState(lang[ok] ?: ""))
         )
     }
     Surface {
@@ -53,15 +55,18 @@ fun ChangeSpecialityScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = lang[speciality]?:"")
+                    Text(text = lang[speciality] ?: "")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = "Save speciality")
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(lang[save_speciality] ?: "")
                     }
                 }
             }

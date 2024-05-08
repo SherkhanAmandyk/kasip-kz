@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 
@@ -84,12 +85,12 @@ fun PreviewKasipDialog() {
         title = "This is Error",
         buttons = listOf(
             ButtonUiState(
-                text = "ok",
+                lang[ok] ?: "",
                 color = PrimaryBackgroundGreen,
                 textColor = Color.White
             ),
             ButtonUiState(
-                text = "ok",
+                lang[ok] ?: "",
                 color = PrimaryBackgroundGreen,
                 textColor = Color.White
             )

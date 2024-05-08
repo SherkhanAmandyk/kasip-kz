@@ -1,6 +1,8 @@
 package kz.kasip.ui.main
 
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.block_list
+import kz.kasip.designcore.favorite
 import kz.kasip.designcore.general
 import kz.kasip.designcore.hidden
 import kz.kasip.designcore.my_response
@@ -17,14 +19,14 @@ class MainUiState {
             (lang[my_works]),
             lang[hidden] ?: "",
             lang[my_response] ?: "",
-            "Favorite",
+            lang[favorite] ?: "",
             lang[viewed] ?: "",
             lang[rialto] ?: "",
         ),
         (lang[general] ?: "") to listOf(
             lang[settings] ?: "",
             lang[profile] ?: "",
-            "Block list"
+            lang[block_list] ?: ""
         )
     )
 }

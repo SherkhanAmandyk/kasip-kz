@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.city
+import kz.kasip.designcore.save_city
 
 @Composable
 fun ChangeCityScreen(
@@ -50,8 +51,11 @@ fun ChangeCityScreen(
                         value = city,
                         onValueChange = viewModel::onText1Change
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = "Save City")
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(lang[save_city] ?: "")
                     }
                 }
             }

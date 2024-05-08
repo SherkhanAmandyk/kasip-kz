@@ -1,15 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="register_with_email">Register with Email</string>
-    <string name="sign_in">Sign in</string>
-    <string name="register">Register</string>
-    <string name="hide_password">Hide password</string>
-    <string name="password">Password</string>
-    <string name="show_password">Show password</string>
-    <string name="repeat_password">Repeat password</string>
-    <string name="email">Email</string>
-    <string name="email_is_used">Email is already used</string>
-    <string name="ok">OK</string>
-    <string name="password_doesnt_match">Passwords doesn\'t match</string>
-    <string name="email_invalid">Email is invalid</string>
 </resources>

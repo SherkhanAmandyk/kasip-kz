@@ -37,6 +37,8 @@ import coil.compose.rememberAsyncImagePainter
 import kz.kasip.catalog.R
 import kz.kasip.data.entities.CatalogItem
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.catalog_rubrics
 
 @Composable
 fun CatalogScreen(
@@ -51,7 +53,7 @@ fun CatalogScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.catalog_rubrics),
+                    title = lang[catalog_rubrics] ?: "",
                     onBack = onBack
                 )
             }

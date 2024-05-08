@@ -37,8 +37,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.active
 import kz.kasip.designcore.create_a_project_and_find_performers
 import kz.kasip.designcore.create_project
+import kz.kasip.designcore.created
 import kz.kasip.designcore.theme.CB
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -124,7 +126,7 @@ fun MyOrderItem(orderUi: OrderUi) {
                             )
                             .padding(vertical = 8.dp, horizontal = 28.dp)
                     ) {
-                        Text(text = "Active", color = Color.White)
+                        Text(lang[active] ?: "", color = Color.White)
                     }
                 }
                 Row(
@@ -177,7 +179,7 @@ fun MyOrderItem(orderUi: OrderUi) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "created ${orderUi.time.toDate().toDate()}"
+                    text = "${lang[created]} ${orderUi.time.toDate().toDate()}"
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(28.dp)

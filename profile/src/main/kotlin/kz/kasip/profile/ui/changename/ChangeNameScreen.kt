@@ -13,13 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.update
-import kz.kasip.designcore.*
+import kz.kasip.designcore.ButtonUiState
+import kz.kasip.designcore.KasipDialog
+import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
-import kz.kasip.profile.R
+import kz.kasip.designcore.change_name
+import kz.kasip.designcore.name
+import kz.kasip.designcore.ok
+import kz.kasip.designcore.save_name
 
 @Composable
 fun ChangeNameScreen(
@@ -30,14 +34,14 @@ fun ChangeNameScreen(
     if (isNameInvalid) {
         KasipDialog(
             onDismissRequest = { viewModel.isNameInvalidFlow.update { false } },
-            buttons = listOf(ButtonUiState(text = "Ok"))
+            buttons = listOf(ButtonUiState(lang[ok] ?: ""))
         )
     }
     Surface {
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = stringResource(id = R.string.change_name),
+                    title = lang[change_name] ?: "",
                     onBack = onBack
                 )
             }
@@ -52,15 +56,18 @@ fun ChangeNameScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = lang[name]?:"")
+                    Text(text = lang[name] ?: "")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = stringResource(id = R.string.save_name))
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(text = lang[save_name] ?: "")
                     }
                 }
             }

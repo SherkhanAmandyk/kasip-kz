@@ -47,6 +47,8 @@ import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.delete_chat
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
+import kz.kasip.designcore.you_are_blocked
+import kz.kasip.designcore.you_blocked_this_chat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -133,7 +135,7 @@ fun ChatScreen(
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
                                 .fillMaxWidth(),
-                            text = "You are blocked",
+                            text = lang[you_are_blocked] ?: "",
                             textAlign = TextAlign.Center
                         )
                     } else {
@@ -143,7 +145,7 @@ fun ChatScreen(
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
                                     .fillMaxWidth(),
-                                text = "You blocked this chat ",
+                                text = lang[you_blocked_this_chat] ?: "",
                                 textAlign = TextAlign.Center
                             )
                         } else {

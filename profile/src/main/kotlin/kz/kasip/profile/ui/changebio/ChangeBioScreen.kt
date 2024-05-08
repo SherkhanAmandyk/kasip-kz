@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.bio
+import kz.kasip.designcore.save_bio
 
 @Composable
 fun ChangeBioScreen(
@@ -41,15 +44,18 @@ fun ChangeBioScreen(
                         .padding(top = 46.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(text = "Bio")
+                    Text(lang[bio] ?: "")
                     val text by viewModel.textFlow.collectAsState()
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = text,
                         onValueChange = viewModel::onTextChange
                     )
-                    Button(onClick = { viewModel.onSave() }) {
-                        Text(text = "Save Bio")
+                    Button(onClick = {
+                        viewModel.onSave()
+                        onBack()
+                    }) {
+                        Text(lang[save_bio] ?: "")
                     }
                 }
             }

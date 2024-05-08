@@ -47,11 +47,14 @@ import kz.kasip.data.LogOutUseCase
 import kz.kasip.data.repository.DataStoreRepository
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.MainTopAppBar
+import kz.kasip.designcore.block_list
+import kz.kasip.designcore.favorite
 import kz.kasip.designcore.hidden
 import kz.kasip.designcore.log_out
 import kz.kasip.designcore.my_response
 import kz.kasip.designcore.my_works
 import kz.kasip.designcore.notification
+import kz.kasip.designcore.photo
 import kz.kasip.designcore.profile
 import kz.kasip.designcore.rialto
 import kz.kasip.designcore.settings
@@ -88,8 +91,8 @@ fun MainScreen(
             lang[settings] ?: "" -> navigateTo(settingsScreen)
             lang[profile] ?: "" -> navigateTo(profileScreen)
             lang[rialto] ?: "" -> navigateTo(rialtoScreen)
-            "Block list" -> navigateTo(blockListScreen)
-            "Favorite" -> navigateTo(favoriteScreen)
+            lang[block_list] -> navigateTo(blockListScreen)
+            lang[favorite] -> navigateTo(favoriteScreen)
             lang[viewed] ?: "" -> navigateTo(viewedScreen)
         }
     }
@@ -127,7 +130,7 @@ fun MainScreen(
                                     Icon(
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         painter = painterResource(id = R.drawable.icon_catalog),
-                                        contentDescription = stringResource(id = R.string.catalog)
+                                        contentDescription = "Catalog"
                                     )
                                 }
                             )
@@ -140,7 +143,7 @@ fun MainScreen(
                                     Icon(
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         painter = painterResource(id = R.drawable.icon_chats),
-                                        contentDescription = stringResource(id = R.string.calendar)
+                                        contentDescription = "Calendar"
                                     )
                                 }
                             )
@@ -153,7 +156,7 @@ fun MainScreen(
                                     Icon(
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         painter = painterResource(id = R.drawable.icon_calendar),
-                                        contentDescription = stringResource(id = R.string.calendar)
+                                        contentDescription = "Calendar"
                                     )
                                 }
                             )
@@ -176,7 +179,7 @@ fun MainScreen(
                                 content = {
                                     Icon(
                                         painter = painterResource(id = R.drawable.icon_works),
-                                        contentDescription = stringResource(id = R.string.works)
+                                        contentDescription = "Works"
                                     )
                                 }
                             )
@@ -234,7 +237,7 @@ fun MainScreen(
                         showBottomSheet = false
                     }
                 ) {
-                    Text(text = stringResource(id = R.string.photo))
+                    Text(lang[photo] ?: "")
                 }
                 Spacer(modifier = Modifier.height(32.dp))
             }

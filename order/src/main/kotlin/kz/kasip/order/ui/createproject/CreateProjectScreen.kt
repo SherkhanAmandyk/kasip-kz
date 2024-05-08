@@ -45,6 +45,7 @@ import kz.kasip.designcore.add_the_cost
 import kz.kasip.designcore.cost
 import kz.kasip.designcore.create_project
 import kz.kasip.designcore.detail_description_of_project
+import kz.kasip.designcore.ok
 import kz.kasip.designcore.project_name
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
@@ -66,7 +67,7 @@ fun CreateProjectScreen(
     }?.let {
         KasipDialog(
             title = it,
-            buttons = listOf(ButtonUiState(text = "Ok")),
+            buttons = listOf(ButtonUiState(lang[ok] ?: "")),
             onDismissRequest = viewModel::invalidateStates,
         ) {
             viewModel.invalidateStates()

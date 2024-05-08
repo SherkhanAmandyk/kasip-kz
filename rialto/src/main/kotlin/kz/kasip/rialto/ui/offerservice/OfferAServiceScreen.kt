@@ -40,10 +40,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.cost
+import kz.kasip.designcore.desired_budget
 import kz.kasip.designcore.detail_description_of_project
 import kz.kasip.designcore.history
 import kz.kasip.designcore.offer
 import kz.kasip.designcore.offer_a_service
+import kz.kasip.designcore.rate
 import kz.kasip.designcore.theme.DialogBackground
 import kz.kasip.designcore.theme.PrimaryBackgroundGreen
 import kz.kasip.designcore.to
@@ -136,7 +138,7 @@ fun OfferAServiceScreen(
                                 verticalAlignment = Alignment.Bottom
                             ) {
                                 Text(
-                                    text = "Desired budget: ",
+                                    text = "${lang[desired_budget]}: ",
                                     fontSize = 16.sp
                                 )
                                 Text(text = lang[to] ?: "")
@@ -168,10 +170,7 @@ fun OfferAServiceScreen(
                                         modifier = Modifier
                                             .weight(1F)
                                             .wrapContentSize(),
-                                        text = stringResource(
-                                            id = R.string.rate,
-                                            rialto.buyer?.rate ?: ""
-                                        ),
+                                        text = "${lang[rate]} ${rialto.buyer?.rate}",
                                         fontSize = 10.sp,
                                     )
                                     Text(

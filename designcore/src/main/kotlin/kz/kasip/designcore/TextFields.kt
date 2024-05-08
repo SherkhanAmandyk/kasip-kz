@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -63,12 +62,10 @@ fun PasswordTextField(
                 Icons.Filled.VisibilityOff
 
             // Please provide localized description for accessibility services
-            val description = stringResource(
-                id = if (passwordVisible)
-                    R.string.hide_password
-                else
-                    R.string.show_password
-            )
+            val description = if (passwordVisible)
+                "Hide password"
+            else
+                "Show password"
 
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(imageVector = image, description)

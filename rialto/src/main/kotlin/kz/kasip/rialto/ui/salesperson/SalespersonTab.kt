@@ -40,6 +40,7 @@ import coil.compose.rememberAsyncImagePainter
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.history
 import kz.kasip.designcore.offer
+import kz.kasip.designcore.rate
 import kz.kasip.designcore.search
 import kz.kasip.designcore.theme.CardBackground
 import kz.kasip.designcore.theme.Divider
@@ -141,7 +142,7 @@ fun SalespersonTab(
                                 modifier = Modifier
                                     .weight(1F)
                                     .wrapContentSize(),
-                                text = stringResource(id = R.string.rate, rialto.buyer?.rate ?: ""),
+                                text = "${lang[rate]} ${rialto.buyer?.rate}",
                                 fontSize = 10.sp,
                             )
                             Text(
