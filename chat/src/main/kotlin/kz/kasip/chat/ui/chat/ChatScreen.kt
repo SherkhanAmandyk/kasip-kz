@@ -23,6 +23,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -59,6 +60,8 @@ fun ChatScreen(
     },
     onBack: () -> Unit,
 ) {
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
     Surface {
         Scaffold(
             topBar = {
@@ -156,7 +159,7 @@ fun ChatScreen(
                                     viewModel.messageFlow.update { text }
                                 },
                                 trailingIcon = {
-                                    IconButton(onClick = { viewModel.send() }) {
+                                    IconButton(onClick = viewModel::send) {
                                         Icon(
                                             painter = painterResource(id = kz.kasip.designcore.R.drawable.icon_forward),
                                             contentDescription = ""
@@ -174,7 +177,6 @@ fun ChatScreen(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    val scrollState = rememberScrollState()
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -210,6 +212,11 @@ fun ChatScreen(
                                         text = "${message.sentAt.hours}:${message.sentAt.minutes}"
                                     )
                                 }
+                            }
+                        }
+                        LaunchedEffect(chats) {
+                            coroutineScope.launch {
+                                scrollState.scrollTo(scrollState.maxValue)
                             }
                         }
                     }
