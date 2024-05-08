@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_country
 import kz.kasip.designcore.country
 import kz.kasip.designcore.save_country
 
@@ -29,7 +30,7 @@ fun ChangeCountryScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change bio",
+                    title = lang[change_country] ?: "",
                     onBack = onBack
                 )
             }

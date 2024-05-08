@@ -2,7 +2,6 @@ package kz.kasip.designcore
 
 import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -53,11 +52,16 @@ fun ChatItem(
                         avatar,
                         contentScale = ContentScale.Crop,
 
-                    ),
+                        ),
                     contentDescription = ""
                 )
             } else {
                 Image(
+                    modifier = Modifier
+                        .height(75.dp)
+                        .width(75.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, Color.Black, CircleShape),
                     painter = painterResource(
                         id = R.drawable.icon_profile_pic
                     ),

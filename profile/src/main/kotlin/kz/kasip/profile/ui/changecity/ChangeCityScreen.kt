@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_city
 import kz.kasip.designcore.city
 import kz.kasip.designcore.save_city
 
@@ -29,7 +30,7 @@ fun ChangeCityScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change city",
+                    title = lang[change_city] ?: "",
                     onBack = onBack
                 )
             }

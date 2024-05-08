@@ -20,6 +20,7 @@ import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_speciality
 import kz.kasip.designcore.ok
 import kz.kasip.designcore.save_speciality
 import kz.kasip.designcore.speciality
@@ -40,7 +41,7 @@ fun ChangeSpecialityScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change speciality",
+                    title = lang[change_speciality] ?: "",
                     onBack = onBack
                 )
             }

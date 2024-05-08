@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.ChatItem
 import kz.kasip.designcore.KasipTopAppBar
+import kz.kasip.designcore.Lang.lang
 
 @Composable
 fun ChatsScreen(
@@ -36,14 +39,17 @@ fun ChatsScreen(
             viewModel.invalidate()
         }
     }
+    val scrollState = rememberScrollState()
     Surface {
         Scaffold(
             topBar = {
-                KasipTopAppBar(title = "Chats", onBack = onBack)
+                KasipTopAppBar(title = lang[kz.kasip.designcore.chat] ?: "", onBack = onBack)
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
-                Column {
+                Column(
+                    modifier = Modifier.verticalScroll(scrollState)
+                ) {
                     val chats by viewModel.chatsToOpenFlow.collectAsState(emptyList())
                     chats.forEach {
                         Box(modifier = Modifier.padding(vertical = 16.dp)) {

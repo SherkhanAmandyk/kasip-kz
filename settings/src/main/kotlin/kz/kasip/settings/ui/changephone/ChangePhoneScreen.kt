@@ -20,6 +20,7 @@ import kz.kasip.designcore.ButtonUiState
 import kz.kasip.designcore.KasipDialog
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_phone
 import kz.kasip.designcore.ok
 import kz.kasip.designcore.phone
 import kz.kasip.designcore.save_phone
@@ -40,7 +41,7 @@ fun ChangePhoneScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change phone",
+                    title = lang[change_phone] ?: "",
                     onBack = onBack
                 )
             }

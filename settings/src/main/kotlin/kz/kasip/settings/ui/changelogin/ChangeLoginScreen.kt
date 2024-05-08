@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_login
 import kz.kasip.designcore.login
 import kz.kasip.designcore.save_login
 
@@ -29,7 +30,7 @@ fun ChangeLoginScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change login",
+                    title = lang[change_login] ?: "",
                     onBack = onBack
                 )
             }

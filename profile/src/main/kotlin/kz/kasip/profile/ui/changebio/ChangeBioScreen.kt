@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.bio
+import kz.kasip.designcore.change_info_about_me
 import kz.kasip.designcore.save_bio
 
 @Composable
@@ -29,7 +30,7 @@ fun ChangeBioScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change bio",
+                    title = lang[change_info_about_me] ?: "",
                     onBack = onBack
                 )
             }

@@ -278,7 +278,12 @@ object Lang {
         email_invalid to "Email invalid",
         rate to "Рейтинг",
         save_phone to "Save phone",
-        photo to "Photo"
+        photo to "Photo",
+        change_info_about_me to "Мен Туралы Ақпаратты өзгерту",
+        change_city to "Каланы өзгерту",
+        change_country to "Мемлекетті өзгерту",
+        change_speciality to "Профессияны өзгерту",
+        change_phone to "Телефонды өзгерту"
     )
     val eng: Map<String, String> = mapOf(
         favorite to "Favorite",
@@ -556,6 +561,11 @@ object Lang {
         rate to "Rate",
         save_phone to "Save phone",
         photo to "Photo",
+        change_info_about_me to "Сhange info about me",
+        change_city to "Сhange city",
+        change_country to "Сhange country",
+        change_speciality to "Сhange speciality",
+        change_phone to "Change phone"
     )
     var lang = kz
 }

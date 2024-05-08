@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.PasswordTextField
+import kz.kasip.designcore.change_password
 import kz.kasip.designcore.password
 import kz.kasip.designcore.repeat_password
 import kz.kasip.designcore.save_password
@@ -30,7 +31,7 @@ fun ChangePasswordScreen(
         Scaffold(
             topBar = {
                 KasipTopAppBar(
-                    title = "Change password",
+                    title = lang[change_password]?:"",
                     onBack = onBack
                 )
             }

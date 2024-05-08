@@ -8,6 +8,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kz.kasip.data.mappers.toProfile
 import kz.kasip.data.repository.DataStoreRepository
+import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.change_city
+import kz.kasip.designcore.change_country
+import kz.kasip.designcore.change_info_about_me
+import kz.kasip.designcore.change_name
+import kz.kasip.designcore.change_speciality
+import kz.kasip.designcore.city
+import kz.kasip.designcore.country
+import kz.kasip.designcore.info_about_me
+import kz.kasip.designcore.name
+import kz.kasip.designcore.speciality
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,7 +49,7 @@ class ProfileViewModel @Inject constructor(
                             ProfileInfo.City(value = profile.city),
                             ProfileInfo.Country(value = profile.country),
 
-                        )
+                            )
                     }
                 }
             }
@@ -51,21 +62,21 @@ sealed class ProfileInfo(
 ) {
     data class Name(
         override val value: String,
-    ) : ProfileInfo("Name", value)
+    ) : ProfileInfo(lang[change_name] ?: "", value)
 
     data class Bio(
         override val value: String,
-    ) : ProfileInfo("Bio", value)
+    ) : ProfileInfo(lang[change_info_about_me] ?: "", value)
 
     data class Speciality(
         override val value: String,
-    ) : ProfileInfo("Speciality", value)
+    ) : ProfileInfo(lang[change_speciality] ?: "", value)
 
     data class City(
         override val value: String,
-    ) : ProfileInfo("City", value)
+    ) : ProfileInfo(lang[change_city] ?: "", value)
 
     data class Country(
         override val value: String,
-    ) : ProfileInfo("Country", value)
+    ) : ProfileInfo(lang[change_country] ?: "", value)
 }

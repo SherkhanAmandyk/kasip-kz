@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kz.kasip.chat.R
 import kz.kasip.designcore.KasipTopAppBar
 import kz.kasip.designcore.Lang.lang
+import kz.kasip.designcore.block_list
 import kz.kasip.designcore.unblock
 
 @Composable
@@ -34,7 +35,7 @@ fun BlockListScreen(
     Surface {
         Scaffold(
             topBar = {
-                KasipTopAppBar(title = "Block list", onBack = onBack)
+                KasipTopAppBar(title = lang[block_list] ?: "", onBack = onBack)
             }
         ) {
             Box(modifier = Modifier.padding(it)) {
