@@ -22,6 +22,9 @@ import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import kz.kasip.catalog.catalogNavGraph
 import kz.kasip.chat.navigation.chatGraph
+import kz.kasip.designcore.Lang.eng
+import kz.kasip.designcore.Lang.kz
+import kz.kasip.designcore.Lang.lang
 import kz.kasip.designcore.theme.KasipkzTheme
 import kz.kasip.onboarding.navigation.onboarding
 import kz.kasip.onboarding.navigation.onboardingGraph
@@ -57,6 +60,11 @@ class RootActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lang =  if (viewModel.lang == "kz") {
+            kz
+        } else {
+            eng
+        }
         setContent {
             KasipkzTheme {
                 val navController = rememberNavController()

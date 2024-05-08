@@ -22,6 +22,7 @@ class RootViewModel @Inject constructor(
     val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
 
+    val lang: String = dataStoreRepository.getLang()
     var start: String = if (dataStoreRepository.getUserId() == null) {
         onboarding
     } else {

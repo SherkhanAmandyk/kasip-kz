@@ -34,4 +34,10 @@ class DataStoreRepository(private val sharedPreferences: SharedPreferences) {
             sharedPreferences.edit().putBoolean(id, true).apply()
         }
     }
+
+    fun saveLang(lang: String) {
+        sharedPreferences.edit().putString("lang", lang).apply()
+    }
+
+    fun getLang(): String = sharedPreferences.getString("lang", "kz") ?: "kz"
 }

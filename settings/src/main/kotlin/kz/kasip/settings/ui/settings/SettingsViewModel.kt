@@ -50,6 +50,13 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             appLangFlow.collect {
                 lang = it
+                dataStoreRepository.saveLang(
+                    if (it == kz) {
+                        "kz"
+                    } else {
+                        "eng"
+                    }
+                )
             }
         }
     }
