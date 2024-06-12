@@ -277,7 +277,7 @@ object Lang {
         password_doesnt_match to "Password doesn't match",
         email_invalid to "Email invalid",
         rate to "Рейтинг",
-        save_phone to "Save phone",
+        save_phone to "Телефонды сақта",
         photo to "Photo",
         change_info_about_me to "Мен Туралы Ақпаратты өзгерту",
         change_city to "Каланы өзгерту",

@@ -66,7 +66,7 @@ class ChatViewModel @AssistedInject constructor(
             }
 
         Firebase.firestore.document("chats/$charId")
-            .addSnapshotListener { value, error ->
+            .addSnapshotListener { value, _ ->
                 value?.toChat()?.let { chat ->
                     chatFlow.update { chat }
                 }
@@ -94,7 +94,7 @@ class ChatViewModel @AssistedInject constructor(
                 it?.let { user ->
                     Firebase.firestore.collection("profiles")
                         .whereEqualTo("userId", user.id)
-                        .addSnapshotListener { value, error ->
+                        .addSnapshotListener { value, _ ->
                             value?.documents?.firstOrNull()?.toProfile()?.let { profile ->
                                 profileFlow.update {
                                     profile
@@ -122,7 +122,7 @@ class ChatViewModel @AssistedInject constructor(
             runCatching {
                 fcm.sendPush(
                     push = Push(
-                        to = "edcovFInS1-lXGMslti1sQ:APA91bH48KjN--onXSfXcpzDu79rYdw7tYcUuvQE0aM3wqw-LqhO8M6obVwIi3ZJAMvgXFB7SMffwEo6IIso9-kn3wVBV5Y7-hNfncvkjRaVP566C7jO4WAegV22k3JUdvgQxFFxT9Rc",
+                        to = to?.fcmToken,
                         data = PushData(
                             body = message,
                             title = "Message",
