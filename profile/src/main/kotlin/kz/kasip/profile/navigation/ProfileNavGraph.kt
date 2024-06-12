@@ -3,6 +3,7 @@ package kz.kasip.profile.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kz.kasip.profile.ui.changebio.ChangeBioScreen
+import kz.kasip.profile.ui.changebio.ChangeCountryScreen
 import kz.kasip.profile.ui.changecity.ChangeCityScreen
 import kz.kasip.profile.ui.changename.ChangeNameScreen
 import kz.kasip.profile.ui.changespeciality.ChangeSpecialityScreen
@@ -44,5 +45,8 @@ fun NavGraphBuilder.profileNavGraph(
         ChangeCityScreen(
             onBack = onBack
         )
+    }
+    composable(changeCountryScreen) {
+        ChangeCountryScreen(onBack = onBack)
     }
 }
